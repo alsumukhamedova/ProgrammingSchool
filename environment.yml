@@ -1,0 +1,3 @@
+name: aggregation_system
+dependencies:
+  - python=3.8.10
