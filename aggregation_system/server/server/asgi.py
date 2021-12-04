@@ -1,5 +1,5 @@
 """
-ASGI config for server project.
+ASGI config for server aggregation_system.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
