@@ -3,18 +3,14 @@ from .models import ResultSend, CheckSend
 
 
 class ResultSendSerializer(serializers.ModelSerializer):
-    """
-        Serializer for ResultSend class
-    """
+    """Serializer for ResultSend class"""
     class Meta:
         model = ResultSend
-        fields = ("solution_status", "task_id", "program_language")
+        fields = ("solution_status", "task_id", "program_lang")
 
 
 class CheckSendSerializer(serializers.ModelSerializer):
-    """
-        Serializer for CheckSend class
-    """
+    """Serializer for CheckSend class"""
     class Meta:
         model = CheckSend
-        fields = ("user_id", "task_id", "program_language", "testing_stage")
+        fields = ("user_id", "task_id", "program_lang", "testing_stage")

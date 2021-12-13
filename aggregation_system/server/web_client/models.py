@@ -2,7 +2,7 @@ from django.db import models
 
 
 class CheckSend(models.Model):
-    """
+    """ Params of stage in testing
     Arguments:
         user_id - personal user id like in database
         task_id - personal task id like in database
@@ -11,7 +11,7 @@ class CheckSend(models.Model):
     """
     user_id = models.CharField(max_length=30)
     task_id = models.CharField(max_length=30)
-    program_language = models.CharField(max_length=15)
+    program_lang = models.CharField(max_length=30)
     testing_stage = models.IntegerField()
 
     def __str__(self) -> str:
@@ -19,7 +19,7 @@ class CheckSend(models.Model):
 
 
 class ResultSend(models.Model):
-    """
+    """ Results of tessting
         Arguments:
             solution_status - value in tuple of solution status stage
             task_id - personal task id like in database
@@ -27,7 +27,7 @@ class ResultSend(models.Model):
         """
     solution_status = models.IntegerField()
     task_id = models.CharField(max_length=30)
-    program_language = models.CharField(max_length=15)
+    program_lang = models.CharField(max_length=30)
 
     def __str__(self) -> str:
         return self.task_id
