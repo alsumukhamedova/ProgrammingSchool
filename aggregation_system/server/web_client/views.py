@@ -7,9 +7,7 @@ from rest_framework.views import APIView
 
 
 class ResultSendView(APIView):
-    """
-    Get-request for ResultSend class
-    """
+    """Get-request for ResultSend class"""
     def get(self, request):
         results = ResultSend.objects.all()
         serializer = ResultSendSerializer(results, many=True)
@@ -17,9 +15,7 @@ class ResultSendView(APIView):
 
 
 class CheckSendView(APIView):
-    """
-        Get-request for CheckSend class
-    """
+    """Get-request for CheckSend class"""
     def get(self, request):
         checks = CheckSend.objects.all()
         serializer = CheckSendSerializer(checks, many=True)
