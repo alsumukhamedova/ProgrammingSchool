@@ -1,10 +1,12 @@
 from django.urls import path
 
-from .views import ResultSendView, CheckSendView
+# from .views import ResultSendView, CheckSendView
+from .views import send_result, check_send
+
 
 """Links in web_client app"""
 
 urlpatterns = [
-    path('results/', ResultSendView.as_view()),
-    path('check/', CheckSendView.as_view()),
+    path('check/', check_send),
+    path('result/', send_result)
 ]
