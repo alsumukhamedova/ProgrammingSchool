@@ -8,5 +8,6 @@ from django.urls.conf import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('web-client/', include('web_client.urls'))
+    path('web-client/', include('web_client.urls')),
+    path('test-server/', include('test_server.urls'))
 ]
