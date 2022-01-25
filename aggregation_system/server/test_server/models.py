@@ -4,21 +4,21 @@ from django.db import models
 
 
 # Create your models here.
-# class StageStatuses(models.TextChoices):
-#     check_secret_case = '0', 'Secret'
-#     check_open_case = '1', 'Open'
+class StageStatuses(models.TextChoices):
+    check_secret_case = '0', 'Secret'
+    check_open_case = '1', 'Open'
 
 
 class ProgramLanguages(models.TextChoices):
     PYTHON = 1, _('Python')
 
 
-# class SolutionStatus(models.TextChoices):
-#     best_solution = '0', 'Best'
-#     good_solution = '1', 'Good'
-#     bad_true_solution = '2', 'Bad_True'
-#     bad_unwork_solution = '3', 'Bad_Unwork'
-#     bad_operating_case_solution = '4', 'Bad_Operating'
+class SolutionStatus(models.TextChoices):
+    best_solution = '0', 'Best'
+    good_solution = '1', 'Good'
+    bad_true_solution = '2', 'Bad_True'
+    bad_unwork_solution = '3', 'Bad_Unwork'
+    bad_operating_case_solution = '4', 'Bad_Operating'
 
 
 class OperatingTime(models.Model):
