@@ -14,7 +14,7 @@ class CheckSend(models.Model):
     task_id = models.CharField(max_length=30)
     program_lang = models.CharField(max_length=30)
     testing_stage = models.IntegerField()
-    code_file = models.FileField()
+    code_file = models.FileField(default='default.py')
 
     def __str__(self) -> str:
         return self.user_id
