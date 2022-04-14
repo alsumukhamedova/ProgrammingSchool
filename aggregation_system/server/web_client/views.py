@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 
-@api_view(['POST', 'GET'])
+@api_view(['POST'])
 def send_result(request):
     ''' Request for ResultSend
     :param request:
@@ -15,14 +15,9 @@ def send_result(request):
         program_language - name of program language to test code
         testing_stage - value in tuple of testing stage
     :return:
-        GET: base class
         POST: Server gets some data
     '''
-    if request.method == 'POST':
-        return Response({"message": "Got some data!", "data": request.data})
-    results = ResultSend.objects.all()
-    serializer = ResultSendSerializer(results, many=True)
-    return Response({"results": serializer.data})
+    return Response({"message": "Got some data!", "data": request.data})
 
 
 @api_view(['GET'])
