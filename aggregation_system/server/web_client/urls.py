@@ -8,8 +8,8 @@ from .views import send_result, check_send, task, group_statistics
 """Links in web_client app"""
 
 urlpatterns = [
-                  path('check/', send_result),
-                  path('result/', check_send),
+                  path('check/', check_send),
+                  path('result/', send_result),
                   path('tasks/<int:task_id>', task, name='task'),
                   path('statistics/<int:task_id>', group_statistics, name='group_statistics')
               ] + static('templates')

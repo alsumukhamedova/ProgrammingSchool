@@ -42,28 +42,30 @@ def group_statistics(request, task_id):
 
 
 @api_view(['POST'])
-def send_result(request):
-    ''' Request for ResultSend
+def check_send(request):
+    ''' Request for CheckSend
     :param request:
         user_id - personal user id like in database
         task_id - personal task id like in database
         program_language - name of program language to test code
         testing_stage - value in tuple of testing stage
+        code - file with the user's code
     :return:
         POST: Server gets some data
     '''
+
     return Response({"message": "Got some data!", "data": request.data})
 
 
 @api_view(['GET'])
-def check_send(request):
-    ''' Request for CheckSend
+def send_result(request):
+    ''' Request for ResultSend
     :return:
         GET:
             solution_status - value in tuple of solution status stage
             task_id - personal task id like in database
             program_language - name of program language to test code
     '''
-    checks = CheckSend.objects.all()
-    serializer = CheckSendSerializer(checks, many=True)
+    results = ResultSend.objects.all()
+    serializer = ResultSendSerializer(results, many=True)
     return Response({"check": serializer.data})
