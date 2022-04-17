@@ -4,6 +4,23 @@ from .models import ResultSend, CheckSend
 from .serializers import ResultSendSerializer, CheckSendSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from django.shortcuts import render
+
+
+def task(request, task_id):
+    # try:
+    #     p = Tasks.objects.get(pk=task_id)
+    # except Tasks.DoesNotExist:
+    #     raise Http404("Task does not exist")
+    description = f'Test Task Description for task {task_id}'
+    last_solution = 'Last solution written'
+    runtime = 0  # last runtime
+    memory = 0  # last memory
+    runtime = f'{runtime} ms'
+    memory = f'{memory} Mb'
+    return render(request, 'studentTaskDescription.html',
+                  {'description': description, 'last_solution': last_solution,
+                   'runtime': runtime, 'memory': memory})
 
 
 @api_view(['POST'])
