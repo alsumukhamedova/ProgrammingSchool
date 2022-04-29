@@ -34,6 +34,13 @@ def group_statistics(request, task_id):
         {'name': 'Демидов Иван', 'score': 220},
         {'name': 'Бурмистров Владимир', 'score': 5000},
         {'name': 'Мухамедова Алсу', 'score': 404},
+        {'name': 'Мухамедова Алсу', 'score': 404},
+        {'name': 'Литвинов Вячевлав', 'score': 0},
+        {'name': 'Никоненко Андрей роцкер', 'score': 666},
+        {'name': 'Демидов Иван', 'score': 220},
+        {'name': 'Бурмистров Владимир', 'score': 5000},
+        {'name': 'Мухамедова Алсу', 'score': 404},
+        {'name': 'Мухамедова Алсу', 'score': 404},
     ]
     return render(request, 'groupStatistic.html', {
         'task': {'id': task_id, 'name': "Супер сложное задание 1"},

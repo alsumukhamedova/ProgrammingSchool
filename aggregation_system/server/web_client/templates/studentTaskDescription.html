@@ -13,19 +13,9 @@
     <div class="container">
         <div class="col-12>">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
-                </a>
-
-                <form class="col-12 col-lg-4 mb-3 mb-lg-0 me-lg-3">
-                    <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
-                </form>
-
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="studentTasks.html" class="nav-link px-2 text-white fs-3"><u>Мои задачи</u></a></li>
+                    <li><a href="studentTasks.html" class="nav-link px-5 text-white fs-3"><u>Мои задачи</u></a></li>
                 </ul>
-
-
                 <div class="text-end">
                     <p class="btn text-white mb-2 mb-md-0 fs-4 fw-weight-bolder">0
                         <img src="{% static 'images/Star%201.png' %}" class="img-fluid mb-2" width="30" height="30">
@@ -46,32 +36,36 @@
     </div>
 </header>
 <section class="col-12 parts d-flex justify-content-center flex-row">
-    <div class="col-xxl-6 d-flex flex-column">
-        <div class="row part w-100 d-block">
+    <div class="col-5 d-flex flex-column justify-content-lg-between">
+        <div class="row taskDescription w-100 d-block" id="taskDescription">
             <p>{{ description }}</p>
         </div>
-        <div class="row part w-100 d-block">
-            <p>Runtime: {{ runtime }}</p>
-            <p>Memory: {{ memory }}</p>
+        <div class="row taskDescription w-100 d-block" id="taskDescription">
+            <div  class="text">
+                <p>Runtime: {{ runtime }}</p>
+                <p>Memory: {{ memory }}</p>
+            </div>
         </div>
-    </div>
-    <div>
-        <tr class="ace_optionsMenuEntry">
-            <td><label for="-mode" id="mode-label">Язык</label></td>
-            <td>
-                <select id="-mode" onchange="changeMode()">
-                    <option value="ace/mode/c_cpp">C and C++</option>
-                    <option value="ace/mode/csharp">C#</option>
-                    <option value="ace/mode/css">CSS</option>
-                    <option value="ace/mode/golang">Go</option>
-                    <option value="ace/mode/html">HTML</option>
-                    <option value="ace/mode/javascript">JavaScript</option>
-                    <option value="ace/mode/pascal">Pascal</option>
-                    <option value="ace/mode/python">Python</option>
-                </select>
-            </td>
-        </tr>
-        <button type="button" class="btn shadow text-white green saveSolutionButton rounded-pill" onclick="post_solution()">Отправить</button>
+        <div class="taskFooter">
+            <div class="ace rounded-pill">
+                <tr class="ace_optionsMenuEntry">
+                    <td><label class="text-white" for="-mode" id="mode-label">Язык</label></td>
+                    <td>
+                        <select id="-mode">
+                            <option value="ace/mode/c_cpp">C and C++</option>
+                            <option value="ace/mode/csharp">C#</option>
+                            <option value="ace/mode/css">CSS</option>
+                            <option value="ace/mode/golang">Go</option>
+                            <option value="ace/mode/html">HTML</option>
+                            <option value="ace/mode/javascript">JavaScript</option>
+                            <option value="ace/mode/pascal">Pascal</option>
+                            <option value="ace/mode/python">Python</option>
+                        </select>
+                    </td>
+                </tr>
+            </div>
+            <button type="submit" class="btn shadow text-white green saveSolutionButton rounded-pill">Сохранить</button>
+        </div>
     </div>
     <div id="editor">
         {{ last_solution }}

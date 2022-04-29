@@ -13,19 +13,9 @@
     <div class="container">
         <div class="col-12>">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
-                </a>
-
-                <form class="col-12 col-lg-4 mb-3 mb-lg-0 me-lg-3">
-                    <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
-                </form>
-
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="studentTasks.html" class="nav-link px-2 text-white fs-3"><u>Мои задачи</u></a></li>
+                    <li><a href="studentTasks.html" class="nav-link px-5 text-white fs-3"><u>Мои задачи</u></a></li>
                 </ul>
-
-
                 <div class="text-end">
                     <p class="btn text-white mb-2 mb-md-0 fs-4 fw-weight-bolder">0
                         <img src="{% static 'images/Star%201.png' %}" class="img-fluid mb-2" width="30" height="30">
@@ -45,80 +35,23 @@
         </div>
     </div>
 </header>
-<section class="col-12 container">
-    <div class="row">
-        <h1 class="text-center col-xxl-4 col-xl-1 col-md-7 col-sm-3 text-blue mt-xxl-5 mt-sm-4">Задачи</h1>
+<section class="col-8 container">
+    <h1 class="text-blue mt-lg-5">Задачи</h1>
+    <div class="options row">
+        <h5 class="text-blue marked">Помечено</h5>
+        <h5 class="text-blue marked">Баллы</h5>
     </div>
-    <div class="tasksContainer">
-        <div class="row">
-            <ul class="list-group col-xxl-9 col-sm-8">
-                <p class="list-group-item item-text"></p>
-                <p class="list-group-item text-center marked text-blue">Выполнено</p>
-                <p class="list-group-item text-end points text-blue">Баллы</p>
-            </ul>
-        </div>
-        <div class="row">
-            <ul class="list-group col-xxl-9 col-sm-8 list-group-item-primary">
-                <a href="studentTaskDescription.html" class="list-group-item item-text list-group-item-primary"><u>The ugly meaning of the dictionary</u></a>
-                <p class="list-group-item text-center marked list-group-item-primary">0</p>
-                <p class="list-group-item text-end points list-group-item-primary">0</p>
-            </ul>
-        </div>
-        <div class="row">
-            <ul class="list-group offset-md-1 col-xxl-9 col-sm-8 list-group-item-warning">
-                <a href="studentTaskDescription.html" class="list-group-item item-text list-group-item-warning"><u>Merge intervals</u></a>
-                <p class="list-group-item text-center marked list-group-item-warning">0</p>
-                <p class="list-group-item text-end points list-group-item-warning">0</p>
-            </ul>
-        </div>
-        <div class="row">
-            <ul class="list-group col-xxl-9 col-sm-8 list-group-item-primary">
-                <a href="studentTaskDescription.html" class="list-group-item item-text list-group-item-primary"><u>The ugly meaning of the dictionary</u></a>
-                <p class="list-group-item text-center marked list-group-item-primary">0</p>
-                <p class="list-group-item text-end points list-group-item-primary">0</p>
-            </ul>
-        </div>
-        <div class="row">
-            <ul class="list-group offset-md-1 col-xxl-9 col-sm-8 list-group-item-warning">
-                <a href="studentTaskDescription.html" class="list-group-item item-text list-group-item-warning"><u>Merge intervals</u></a>
-                <p class="list-group-item text-center marked list-group-item-warning">0</p>
-                <p class="list-group-item text-end points list-group-item-warning">0</p>
-            </ul>
-        </div>
-        <div class="row">
-            <ul class="list-group offset-md-1 col-xxl-9 col-sm-8 list-group-item-success">
-                <a href="studentTaskDescription.html" class="list-group-item item-text list-group-item-success"><u>Subtree of another tree</u></a>
-                <p class="list-group-item text-center marked list-group-item-success">0</p>
-                <p class="list-group-item text-end points list-group-item-success">0</p>
-            </ul>
-        </div>
-        <div class="row">
-            <ul class="list-group offset-md-1 col-xxl-9 col-sm-8 list-group-item-info">
-                <a href="studentTaskDescription.html" class="list-group-item item-text list-group-item-info"><u>Happy number</u></a>
-                <p class="list-group-item text-center marked list-group-item-info">0</p>
-                <p class="list-group-item text-end points list-group-item-info">0</p>
-            </ul>
-        </div>
-        <div class="row">
-            <ul class="list-group col-xxl-9 col-sm-8 list-group-item-primary">
-                <a href="studentTaskDescription.html" class="list-group-item item-text list-group-item-primary"><u>The ugly meaning of the dictionary</u></a>
-                <p class="list-group-item text-center marked list-group-item-primary">0</p>
-                <p class="list-group-item text-end points list-group-item-primary">0</p>
-            </ul>
-        </div>
-        <div class="row">
-            <ul class="list-group offset-md-1 col-xxl-9 col-sm-8 list-group-item-warning">
-                <a href="studentTaskDescription.html" class="list-group-item item-text list-group-item-warning"><u>Merge intervals</u></a>
-                <p class="list-group-item text-center marked list-group-item-warning">0</p>
-                <p class="list-group-item text-end points list-group-item-warning">0</p>
-            </ul>
-        </div>
-        <div class="row">
-            <ul class="list-group offset-md-1 col-xxl-9 col-sm-8 list-group-item-success">
-                <a href="studentTaskDescription.html" class="list-group-item item-text list-group-item-success"><u>Subtree of another tree</u></a>
-                <p class="list-group-item text-center marked list-group-item-success">0</p>
-                <p class="list-group-item text-end points list-group-item-success">0</p>
-            </ul>
+    <div class="d-flex flex-column tasksContainer justify-content-center">
+        <div class="row align-items-center" id="taskNames">
+            {% for task_id in tasks %}
+            <div class="d-flex flex-row justify-content-between">
+                <a href="studentTaskDescription.html" class="item-text"><u>{{ task_id }}</u></a>
+                <div class="transparentColor w-25 d-flex justify-content-around">
+                    <p class="marked text-blue">Да</p>
+                    <p class="marked text-blue">0</p>
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </section>
