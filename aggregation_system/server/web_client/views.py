@@ -7,6 +7,28 @@ from rest_framework.decorators import api_view
 from django.shortcuts import render
 
 
+def login(request):
+    return render(request, 'logIn.html')
+
+
+def profile_edit(request):
+    # if student, render studentProfileEdit.html
+    # if teacher, render teacherProfielEdit.html
+    return render(request, 'studentProfileEdit.html')
+
+
+def tasks(request):
+    return render(request, 'studentTasks.html',
+                  {'tasks': [
+                      "123",
+                      "345",
+                      "456",
+                      "123",
+                      "345",
+                      "456"
+                  ]})
+
+
 def task(request, task_id):
     # try:
     #     p = Tasks.objects.get(pk=task_id)
@@ -48,6 +70,39 @@ def group_statistics(request, task_id):
     })
 
 
+def teacher_tasks(request):
+    return render(request, 'teacherTasks.html',
+                  {'tasks': [
+                      "123",
+                      "345",
+                      "456",
+                      "123",
+                      "345",
+                      "456"
+                  ]})
+
+
+def teacher_task(request, task_id):
+    description = f'Test Task Description for task {task_id}'
+    return render(request, 'teacherTaskDescription.html',
+                  {'description': description})
+
+
+def teacher_groups(request):
+    return render(request, 'teacherGroups.html',
+                  {'group_list': [
+                      {'id': '123'},
+                      {'id': '234'},
+                      {'id': '345'},
+                      {'id': '456'},
+                      {'id': '123'},
+                      {'id': '234'},
+                      {'id': '345'},
+                      {'id': '456'},
+                  ]})
+    return Response({"check": serializer.data})
+
+
 @api_view(['POST'])
 def check_send(request):
     ''' Request for CheckSend
@@ -75,4 +130,3 @@ def send_result(request):
     '''
     results = ResultSend.objects.all()
     serializer = ResultSendSerializer(results, many=True)
-    return Response({"check": serializer.data})

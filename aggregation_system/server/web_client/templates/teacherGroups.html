@@ -26,9 +26,9 @@
                         <img src="{% static 'images/carbon_user-filled.png' %}" alt="profile" width="60" height="60" class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                        <li><a class="dropdown-item" href="studentProfileEdit.html">Редактировать профиль</a></li>
+                        <li><a class="dropdown-item" href="/profile_edit">Редактировать профиль</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="logIn.html">Выйти</a></li>
+                        <li><a class="dropdown-item" href="/login">Выйти</a></li>
                     </ul>
                 </div>
             </div>
@@ -46,7 +46,8 @@
         <div class="row align-items-center" id="taskNames">
         {% for group in group_list %}
             <div class="d-flex flex-row justify-content-between">
-                <a href="studentTaskDescription.html" class="item-text"><u>{{ group_id }}</u></a>
+                {#        TODO HERE href        #}
+                <a href="studentTaskDescription.html" class="item-text"><u>{{ group.id }}</u></a>
             </div>
         {% endfor %}
         </div>

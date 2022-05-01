@@ -14,7 +14,7 @@
         <div class="col-12>">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="studentTasks.html" class="nav-link px-5 text-white fs-3"><u>Мои задачи</u></a></li>
+                    <li><a href="/tasks" class="nav-link px-5 text-white fs-3"><u>Мои задачи</u></a></li>
                 </ul>
                 <div class="text-end">
                     <p class="btn text-white mb-2 mb-md-0 fs-4 fw-weight-bolder">0
@@ -26,9 +26,9 @@
                         <img src="{% static 'images/carbon_user-filled.png' %}" alt="profile" width="60" height="60" class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                        <li><a class="dropdown-item" href="studentProfileEdit.html">Редактировать профиль</a></li>
+                        <li><a class="dropdown-item" href="/profile_edit">Редактировать профиль</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="logIn.html">Выйти</a></li>
+                        <li><a class="dropdown-item" href="/login">Выйти</a></li>
                     </ul>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                 <tr class="ace_optionsMenuEntry">
                     <td><label class="text-white" for="-mode" id="mode-label">Язык</label></td>
                     <td>
-                        <select id="-mode">
+                        <select id="-mode" onchange="changeMode()">
                             <option value="ace/mode/c_cpp">C and C++</option>
                             <option value="ace/mode/csharp">C#</option>
                             <option value="ace/mode/css">CSS</option>
@@ -64,7 +64,7 @@
                     </td>
                 </tr>
             </div>
-            <button type="submit" class="btn shadow text-white green saveSolutionButton rounded-pill">Сохранить</button>
+            <button type="submit" class="btn shadow text-white green saveSolutionButton rounded-pill" onclick="post_solution()">Сохранить</button>
         </div>
     </div>
     <div id="editor">
