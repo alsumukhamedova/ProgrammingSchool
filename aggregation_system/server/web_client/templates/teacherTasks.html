@@ -14,7 +14,7 @@
         <div class="col-12>">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="studentTasks.html" class="nav-link px-5 text-white fs-3"><u>Мои задачи</u></a></li>
+                    <li><a href="/tasks" class="nav-link px-5 text-white fs-3"><u>Мои задачи</u></a></li>
                 </ul>
                 <div class="text-end">
                     <p class="btn text-white mb-2 mb-md-0 fs-4 fw-weight-bolder">0
@@ -26,9 +26,9 @@
                         <img src="images/carbon_user-filled.png" alt="profile" width="60" height="60" class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                        <li><a class="dropdown-item" href="studentProfileEdit.html">Редактировать профиль</a></li>
+                        <li><a class="dropdown-item" href="/profile_edit">Редактировать профиль</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="logIn.html">Выйти</a></li>
+                        <li><a class="dropdown-item" href="/login">Выйти</a></li>
                     </ul>
                 </div>
             </div>
@@ -44,7 +44,7 @@
         <div class="row align-items-center" id="taskNames">
             {% for task_id in tasks %}
                 <div class="d-flex flex-row justify-content-between">
-                    <a href="studentTaskDescription.html" class="item-text"><u>{{ task_id }}</u></a>
+                    <a href="{{ task_id }}" class="item-text"><u>{{ task_id }}</u></a>
                     <div class="transparentColor w-25 d-flex justify-content-around">
                         <input type="checkbox" class="check">
                     </div>

@@ -14,16 +14,16 @@
         <div class="col-12>">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="teacherTasks.html" class="nav-link px-5 text-white fs-3"><u>Мои задачи</u></a></li>
+                    <li><a href="/teacher/tasks" class="nav-link px-5 text-white fs-3"><u>Мои задачи</u></a></li>
                 </ul>
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="{% static 'images/carbon_user-filled.png' %}" alt="profile" width="60" height="60" class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                        <li><a class="dropdown-item" href="teacherProfielEdit.html">Редактировать профиль</a></li>
+                        <li><a class="dropdown-item" href="/profile">Редактировать профиль</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="logIn.html">Выйти</a></li>
+                        <li><a class="dropdown-item" href="/login">Выйти</a></li>
                     </ul>
                 </div>
             </div>
@@ -33,7 +33,7 @@
 <section class="col-12 container">
     <div class="row">
         <h1 class="text-center col-xxl-4 text-blue mt-xxl-5">{{ task.name }}</h1>
-        <h4 class="addGroup text-blue"><a href="teacherTaskDescription.html"><u>Описание задачи</u></a></h4>
+        <h4 class="addGroup text-blue"><a href="/teacher/tasks/{{ task.id }}"><u>Описание задачи</u></a></h4>
         <div class="options row">
             <h5 class="text-blue w-25 d-flex justify-content-around">Баллы</h5>
         </div>
@@ -42,6 +42,7 @@
         <div class="row align-items-center" id="taskNames">
             {% for person in person_list %}
                 <div class="d-flex flex-row justify-content-between">
+                    {#        TODO here href        #}
                     <a href="studentTaskDescription.html" class="item-text"><u>{{ person.name }}</u></a>
                     <div class="transparentColor w-25 d-flex justify-content-around ">
                         <p class="marked text-blue">{{ person.score }}</p>

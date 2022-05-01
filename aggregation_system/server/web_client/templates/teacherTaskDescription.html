@@ -26,7 +26,7 @@
                         <img src="{% static 'images/carbon_user-filled.png' %}" alt="profile" width="60" height="60" class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                        <li><a class="dropdown-item" href="studentProfileEdit.html">Редактировать профиль</a></li>
+                        <li><a class="dropdown-item" href="/profile_edit">Редактировать профиль</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="logIn.html">Выйти</a></li>
                     </ul>
@@ -38,7 +38,7 @@
 <section class="col-10 container">
     <div class="row">
         <h1 class="text-center col-xxl-4 text-blue mt-lg-5 mt-sm-3 mb-lg-2 mb-sm-0">{{ task_id }}</h1>
-        <h4 class="addGroup text-blue mt-lg-5 mt-sm-3 mb-sm-0 mb-lg-2"><a href="groupStatistic.html"><u>Статистика</u></a></h4>
+        <h4 class="addGroup text-blue mt-lg-5 mt-sm-3 mb-sm-0 mb-lg-2"><a href="/statistics/{{ task_id }}"><u>Статистика</u></a></h4>
     </div>
 </section>
 <section class="parts d-flex justify-content-center">
