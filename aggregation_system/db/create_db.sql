@@ -1,5 +1,5 @@
 CREATE TABLE user_types (
-    user_type VARCHAR(30) not null
+    user_type VARCHAR(30) PRIMARY KEY
 );
 
 CREATE TABLE users (
@@ -23,11 +23,12 @@ CREATE TABLE tasks (
     test_data VARCHAR(500) not null,
     time_to_solve int not null, -- in seconds
     resource_load VARCHAR(300) not null,
-    difficulty_level int not null, 
+    difficulty_level int not null,
     FOREIGN KEY (difficulty_level) REFERENCES marks(mark_value)
 );
 
 CREATE TABLE complete_task (
+    compete_id int PRIMARY KEY,
     user int not null,
     task_id int not null,
     result_mark int not null,
@@ -40,12 +41,11 @@ CREATE TABLE complete_task (
 CREATE TABLE student_group_info(
     group_id int PRIMARY KEY,
     teacher int not null,-- in seconds
-    resource_load VARCHAR(300) not null,
-    difficulty_level int not null, 
-    FOREIGN KEY (difficulty_level) REFERENCES marks(mark_value)
+    FOREIGN KEY (teacher) REFERENCES users(personal_user_id)
 );
 
 CREATE TABLE group_composition(
+    composition_id int PRIMARY KEY,
     group_id int not null,
     student_id int not null,
     FOREIGN KEY (group_id) REFERENCES student_group_info(group_id),
@@ -53,6 +53,7 @@ CREATE TABLE group_composition(
 );
 
 CREATE TABLE marked_tasks(
+    marked_id int PRIMARY Key,
     group_id int not null,
     task_id int not null,
     task_assigment_time int not null, -- in seconds

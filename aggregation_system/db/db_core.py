@@ -5,15 +5,14 @@ from sqlalchemy.orm import Session, sessionmaker
 
 Base = declarative_base()
 
-class DBSession(object):
+
+class DBSession:
     """To communicate with data base with ORM interface.
         They create a session and communicate with database
 
     Example:
         db_session = DBSession(db_path)
-        db_session.query(User).filter(User.active == True).all() # get all active users
-
-        db_session.add_user(1, "1", "Nikita", "Ivanov", "Bikes")
+        db_session.query(Users).all()
 
         db_session.close_session()
     """
