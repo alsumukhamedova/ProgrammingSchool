@@ -9,7 +9,7 @@ from .views import (send_result, check_send, tasks, task, group_statistics,
 """Links in web_client app"""
 
 urlpatterns = [
-                  path('registrate/', sign_up),
+                  path('sign-up/', sign_up),
                   path('login-user/', login_user),
 
                   path('login/', login),
