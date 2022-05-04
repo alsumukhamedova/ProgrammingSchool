@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
-from .models import ResultSend, CheckSend
-from .serializers import ResultSendSerializer, CheckSendSerializer
+from .models import ResultSend, CheckSend, UserTypes, Users
+from .serializers import ResultSendSerializer, CheckSendSerializer, UsersSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.shortcuts import render
@@ -105,7 +105,7 @@ def teacher_groups(request):
 
 @api_view(['POST'])
 def check_send(request):
-    ''' Request for CheckSend
+    """ Request for CheckSend
     :param request:
         user_id - personal user id like in database
         task_id - personal task id like in database
@@ -114,19 +114,70 @@ def check_send(request):
         code - file with the user's code
     :return:
         POST: Server gets some data
-    '''
+    """
 
     return Response({"message": "Got some data!", "data": request.data})
 
 
 @api_view(['GET'])
 def send_result(request):
-    ''' Request for ResultSend
+    """ Request for ResultSend
     :return:
-        GET:
-            solution_status - value in tuple of solution status stage
-            task_id - personal task id like in database
-            program_language - name of program language to test code
-    '''
+         solution_status - value in tuple of solution status stage
+         task_id - personal task id like in database
+         program_language - name of program language to test code
+    """
     results = ResultSend.objects.all()
     serializer = ResultSendSerializer(results, many=True)
+    return Response({"check": serializer.data})
+
+
+@api_view(['POST'])
+def sign_up(request):
+    """
+    Sign up form
+    Args:
+        user_login - user's login
+        user_password - user's password
+        user_type - student or teacher
+
+    Returns:
+        Error or message - 'Got some data!'
+
+    """
+    types = list(UserTypes.objects.all())
+    print(types)
+    if len(types) == 0:
+        UserTypes.objects.create(user_type='student')
+        UserTypes.objects.create(user_type='teacher')
+    form = request.data
+
+    if form['user_type'] == 'student':
+        user = Users(user_login=form['user_login'], user_password=form['user_password'],
+                     user_type=get_object_or_404(UserTypes, user_type='student'))
+    else:
+        user = Users(user_login=form['user_login'], user_password=form['user_password'],
+                     user_type=get_object_or_404(UserTypes, user_type='teacher'))
+
+    user.save()
+    return Response({"message": "Got some data!", "data": request.data})
+
+
+@api_view(['GET'])
+def login_user(request):
+    """
+    Login form
+    Args:
+        user_login - user's login
+        user_password - user's password
+
+    Returns:
+        User:
+            id - user's id
+            user_login - user's login
+            user_type - '1' is a student or '2' is a teacher
+    """
+    form = request.data
+    user = get_object_or_404(Users, user_login=form['user_login'], user_password=form['user_password'])
+    serializer = UsersSerializer(user, many=False)
+    return Response({"user": serializer.data})

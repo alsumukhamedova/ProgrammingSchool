@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ResultSend, CheckSend
+from .models import ResultSend, CheckSend, Users
 
 
 class ResultSendSerializer(serializers.ModelSerializer):
@@ -14,3 +14,9 @@ class CheckSendSerializer(serializers.ModelSerializer):
     class Meta:
         model = CheckSend
         fields = '__all__'
+
+
+class UsersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Users
+        fields = ('id', 'user_login', 'user_type')

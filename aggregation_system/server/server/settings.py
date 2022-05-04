@@ -14,6 +14,7 @@ from pathlib import Path
 
 # Build paths inside the aggregation_system like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+SQL_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -79,7 +80,7 @@ WSGI_APPLICATION = 'server.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.system_information.db',
+        'NAME': SQL_DIR / 'db/system_information.db',
     }
 }
 

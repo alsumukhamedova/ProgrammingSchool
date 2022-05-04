@@ -33,3 +33,19 @@ class ResultSend(models.Model):
 
     def __str__(self) -> str:
         return self.task_id
+
+
+class UserTypes(models.Model):
+    user_type = models.CharField(max_length=30)
+
+    def __str__(self) -> str:
+        return self.user_type
+
+
+class Users(models.Model):
+    user_login = models.CharField(max_length=50, unique=True)
+    user_password = models.CharField(max_length=50)
+    user_type = models.ForeignKey(UserTypes, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return self.user_login

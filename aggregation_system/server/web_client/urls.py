@@ -4,11 +4,14 @@ from django.urls import path
 # from .views import ResultSendView, CheckSendView
 from .views import (send_result, check_send, tasks, task, group_statistics,
                     teacher_groups, teacher_tasks, teacher_task,
-                    login, profile_edit)
+                    login, profile_edit, sign_up, login_user)
 
 """Links in web_client app"""
 
 urlpatterns = [
+                  path('registrate/', sign_up),
+                  path('login-user/', login_user),
+
                   path('login/', login),
 
                   path('request/check/', check_send),
