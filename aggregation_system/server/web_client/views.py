@@ -7,8 +7,20 @@ from rest_framework.decorators import api_view
 from django.shortcuts import render
 
 
+def index(request):
+    return render(request, 'index.html')
+
+
 def login(request):
     return render(request, 'logIn.html')
+
+
+def register(request):
+    return render(request, 'registration.html')
+
+
+def reset_password(request):
+    return render(request, 'resetPassword.html')
 
 
 def profile_edit(request):

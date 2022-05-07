@@ -2,17 +2,21 @@ from django.conf.urls.static import static
 from django.urls import path
 
 # from .views import ResultSendView, CheckSendView
-from .views import (send_result, check_send, tasks, task, group_statistics,
+from .views import (index, send_result, check_send, tasks, task, group_statistics,
                     teacher_groups, teacher_tasks, teacher_task,
-                    login, profile_edit, sign_up, login_user)
+                    login, register, reset_password, profile_edit, sign_up, login_user)
 
 """Links in web_client app"""
 
 urlpatterns = [
+                  path('', index),
                   path('sign-up/', sign_up),
                   path('login-user/', login_user),
 
                   path('login/', login),
+                  path('register/', register),
+
+                  path('reset_password/', reset_password),
 
                   path('request/check/', check_send),
                   path('request/result/', send_result),
