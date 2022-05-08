@@ -177,7 +177,7 @@ def login_user(request):
             user_login - user's login
             user_type - '1' is a student or '2' is a teacher
     """
-    form = request.data
-    user = get_object_or_404(Users, user_login=form['user_login'], user_password=form['user_password'])
+    form = request.headers
+    user = get_object_or_404(Users, user_login=form['user-login'], user_password=form['user-password'])
     serializer = UsersSerializer(user, many=False)
     return Response({"user": serializer.data})
