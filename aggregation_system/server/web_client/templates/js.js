@@ -44,9 +44,11 @@ function register() {
        url: "/sign-up/",
        type: "POST",
        data: {
+           "user-name": document.querySelector("body > main > section > div:nth-child(2) > input").value,
            "user-login": document.querySelector("body > main > section > div:nth-child(3) > input").value,
            "user-password": document.querySelector("body > main > section > div:nth-child(4) > input").value,
-           "user-type": document.querySelector("body > main > section > div:nth-child(6) > input").value
+           "teacher-link": document.querySelector("body > main > section > div:nth-child(5) > input").value,
+           "user-type": document.querySelector("body > main > section > div:nth-child(6) > input").value,
        },
        success: function() {
            window.location.href='/login'
