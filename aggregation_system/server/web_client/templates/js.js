@@ -22,6 +22,41 @@ function proceed(code) {
     form.submit();
 }
 
+function login() {
+    $.ajax({
+       url: "/login-user",
+       type: "GET",
+       headers: {
+           "user-login": document.querySelector("body > main > section > div.logIn__email > input").value,
+           "user-password": document.querySelector("body > main > section > div.form-group > input").value,
+       },
+       success: function() {
+           window.location.href='/profile_edit'
+       },
+       error: function() {
+           document.getElementById('incorrectPassword').style.visibility = 'visible';
+       }
+    });
+}
+
+function register() {
+    $.ajax({
+       url: "/sign-up/",
+       type: "POST",
+       data: {
+           "user-login": document.querySelector("body > main > section > div:nth-child(3) > input").value,
+           "user-password": document.querySelector("body > main > section > div:nth-child(4) > input").value,
+           "user-type": document.querySelector("body > main > section > div:nth-child(6) > input").value
+       },
+       success: function() {
+           window.location.href='/login'
+       },
+       error: function() {
+           alert("Произошла какая-то ошибка сервера ;(")
+       }
+    });
+}
+
 function post_solution() {
     const editor = ace.edit("editor");
     $.ajax('/request/check/',

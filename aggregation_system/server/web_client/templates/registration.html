@@ -10,7 +10,7 @@
 </head>
 <body>
 <main class="logIn">
-  <img src="images/regEllipse.png" class="reg__roundLeft">
+  <img src="{% static 'images/regEllipse.png' %}" class="reg__roundLeft">
   <section class="regForm">
     <h1 class="logIn__heading">Создайте аккаунт</h1>
     <div class="logIn__email">
@@ -29,10 +29,12 @@
       <input type="text" class="form-control shadow rounded-pill logInForm" placeholder="*Student/Teacher">
     </div>
     <div class="d-flex">
-      <button type="submit" class="btn shadow text-white green saveProfileButton rounded-pill regButton">Сохранить</button>
+      <button type="submit" onclick="register()" class="btn shadow text-white green saveProfileButton rounded-pill regButton">Сохранить</button>
     </div>
   </section>
-  <img src="images/registrEllipse.png" class="reg__roundRight">
+  <img src="{% static 'images/registrEllipse.png' %}" class="reg__roundRight">
 </main>
+<script src="{% static 'js.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </body>
 </html>

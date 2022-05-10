@@ -154,7 +154,7 @@ def sign_up(request):
         user_type - student or teacher
 
     Returns:
-        Error or message - 'Got some data!'
+            Error or message - 'Got some data!'
 
     """
     types = list(UserTypes.objects.all())
@@ -164,11 +164,11 @@ def sign_up(request):
         UserTypes.objects.create(user_type='teacher')
     form = request.data
 
-    if form['user_type'] == 'student':
-        user = Users(user_login=form['user_login'], user_password=form['user_password'],
+    if form['user-type'] == 'student':
+        user = Users(user_login=form['user-login'], user_password=form['user-password'],
                      user_type=get_object_or_404(UserTypes, user_type='student'))
     else:
-        user = Users(user_login=form['user_login'], user_password=form['user_password'],
+        user = Users(user_login=form['user-login'], user_password=form['user-password'],
                      user_type=get_object_or_404(UserTypes, user_type='teacher'))
 
     user.save()
