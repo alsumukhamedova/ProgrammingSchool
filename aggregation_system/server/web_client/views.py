@@ -166,10 +166,12 @@ def sign_up(request):
 
     if form['user-type'] == 'student':
         user = Users(user_login=form['user-login'], user_password=form['user-password'],
-                     user_type=get_object_or_404(UserTypes, user_type='student'))
+                     user_type=get_object_or_404(UserTypes, user_type='student'), user_mail=form['user-mail'],
+                     user_name=form['user-name'])
     else:
         user = Users(user_login=form['user-login'], user_password=form['user-password'],
-                     user_type=get_object_or_404(UserTypes, user_type='teacher'))
+                     user_type=get_object_or_404(UserTypes, user_type='teacher'), user_mail=form['user-mail'],
+                     user_name=form['user-name'])
 
     user.save()
     return Response({"message": "Got some data!", "data": request.data})
@@ -190,6 +192,10 @@ def login_user(request):
             user_type - '1' is a student or '2' is a teacher
     """
     form = request.headers
-    user = get_object_or_404(Users, user_login=form['user-login'], user_password=form['user-password'])
+    if form['user-mail'] is not None:
+        user = get_object_or_404(Users, user_mail=form['user-mail'], user_password=form['user-password'])
+    else:
+        user = get_object_or_404(Users, user_login=form['user-login'], user_password=form['user-password'])
+
     serializer = UsersSerializer(user, many=False)
     return Response({"user": serializer.data})
