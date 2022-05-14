@@ -164,14 +164,14 @@ def sign_up(request):
         UserTypes.objects.create(user_type='teacher')
     form = request.data
 
-    if form['user-type'] == 'student':
-        user = Users(user_login=form['user-login'], user_password=form['user-password'],
-                     user_type=get_object_or_404(UserTypes, user_type='student'), user_mail=form['user-mail'],
-                     user_name=form['user-name'])
+    if form['user_type'] == 'student':
+        user = Users(user_login=form['user_login'], user_password=form['user_password'],
+                     user_type=get_object_or_404(UserTypes, user_type='student'), user_mail=form['user_mail'],
+                     user_name=form['user_name'])
     else:
-        user = Users(user_login=form['user-login'], user_password=form['user-password'],
-                     user_type=get_object_or_404(UserTypes, user_type='teacher'), user_mail=form['user-mail'],
-                     user_name=form['user-name'])
+        user = Users(user_login=form['user_login'], user_password=form['user_password'],
+                     user_type=get_object_or_404(UserTypes, user_type='teacher'), user_mail=form['user_mail'],
+                     user_name=form['user_name'])
 
     user.save()
     return Response({"message": "Got some data!", "data": request.data})
@@ -192,10 +192,16 @@ def login_user(request):
             user_type - '1' is a student or '2' is a teacher
     """
     form = request.headers
-    if form['user-mail'] is not None:
-        user = get_object_or_404(Users, user_mail=form['user-mail'], user_password=form['user-password'])
-    else:
-        user = get_object_or_404(Users, user_login=form['user-login'], user_password=form['user-password'])
+    # if form['user-mail']:
+    #     user = get_object_or_404(Users, user_mail=form['user-mail'], user_password=form['user-password'])
+    # else:
+    user = get_object_or_404(Users, user_login=form['user-login'], user_password=form['user-password'])
 
-    serializer = UsersSerializer(user, many=False)
-    return Response({"user": serializer.data})
+    response = Response()
+    response.set_cookie('id', user.id)
+    response.set_cookie('login', user.user_login)
+    response.set_cookie('mail', user.user_mail)
+    response.set_cookie('name', user.user_name)
+    response.set_cookie('type', user.user_type)
+
+    return response

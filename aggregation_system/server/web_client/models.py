@@ -46,8 +46,8 @@ class Users(models.Model):
     user_login = models.CharField(max_length=50, unique=True)
     user_password = models.CharField(max_length=50)
     user_type = models.ForeignKey(UserTypes, on_delete=models.CASCADE)
-    user_mail = models.CharField(max_length=50, unique=True, null=True)
-    user_name = models.CharField(max_length=50, null=True)
+    user_mail = models.CharField(max_length=50, unique=True, default="")
+    user_name = models.CharField(max_length=50, default="")
 
     def __str__(self) -> str:
         return self.user_login
