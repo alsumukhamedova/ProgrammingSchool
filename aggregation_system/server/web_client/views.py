@@ -152,6 +152,8 @@ def sign_up(request):
         user_login - user's login
         user_password - user's password
         user_type - student or teacher
+        user_mail - user's mail
+        user_name - user's name
 
     Returns:
             Error or message - 'Got some data!'
@@ -183,20 +185,25 @@ def login_user(request):
     Login form
     Args:
         user_login - user's login
+        user_mail - user's mail
         user_password - user's password
 
     Returns:
-        User:
+        Cookies:
             id - user's id
             user_login - user's login
-            user_type - '1' is a student or '2' is a teacher
+            user_type - student or teacher
+            user_mail - user's mail
+            user_name - user's name
     """
     form = request.headers
-    # if form['user-mail']:
-    #     user = get_object_or_404(Users, user_mail=form['user-mail'], user_password=form['user-password'])
-    # else:
-    user = get_object_or_404(Users, user_login=form['user-login'], user_password=form['user-password'])
+    if 'user-mail' in form:
+        user = get_object_or_404(Users, user_mail=form['user-mail'], user_password=form['user-password'])
+    else:
+        print(form['user-login'])
+        user = get_object_or_404(Users, user_login=form['user-login'], user_password=form['user-password'])
 
+    print(user.user_login)
     response = Response()
     response.set_cookie('id', user.id)
     response.set_cookie('login', user.user_login)
