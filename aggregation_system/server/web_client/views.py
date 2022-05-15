@@ -1,10 +1,12 @@
-from django.shortcuts import render, get_object_or_404
-
-from .models import ResultSend, CheckSend, UserTypes, Users
-from .serializers import ResultSendSerializer, CheckSendSerializer, UsersSerializer
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from .models import ResultSend, UserTypes, Users
+from .serializers import ResultSendSerializer
+from .submit import submit_run
+import asyncio
 
 
 def index(request):
@@ -127,7 +129,15 @@ def check_send(request):
     :return:
         POST: Server gets some data
     """
-
+    smt = asyncio.run(
+        submit_run(
+            "/home/judges/000002/problems/20/all_solutions/20_python3.py",
+            "2",
+            "python3",
+            "20",
+        )
+    )
+    print(smt)
     return Response({"message": "Got some data!", "data": request.data})
 
 
