@@ -8,6 +8,8 @@ from .serializers import ResultSendSerializer
 from .submit import submit_run
 import asyncio
 
+FILE_DIR = '/home/gypsyjr-virtual/PycharmProjects/aggregation_system/aggregation_system/server/web_client/files/'
+
 
 def index(request):
     return render(request, 'index.html')
@@ -127,9 +129,17 @@ def check_send(request):
         testing_stage - value in tuple of testing stage
         code - file with the user's code
     :return:
-        POST: Server gets some data
+        data with format...
     """
-    smt = asyncio.run(
+    data = request.data
+    path_file = FILE_DIR + data["user_id"] + "_" + data["task_id"] + ".py"
+
+    with open(path_file, "w") as file:
+        file.write(data["code"])
+
+    file.close()
+
+    result = asyncio.run(
         submit_run(
             "/home/judges/000002/problems/20/all_solutions/20_python3.py",
             "2",
@@ -137,8 +147,8 @@ def check_send(request):
             "20",
         )
     )
-    print(smt)
-    return Response({"message": "Got some data!", "data": request.data})
+    # print(result)
+    return Response({"message": "Got some data!", "data": result})
 
 
 @api_view(['GET'])
