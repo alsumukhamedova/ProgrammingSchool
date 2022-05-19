@@ -78,16 +78,22 @@ class CheckSend(models.Model):
         return self.user_id
 
 
-class ResultSend(models.Model):
+class CompleteTask(models.Model):
     """ Results of testing
         Arguments:
-            solution_status - value in tuple of solution status stage
+            user_id - personal user id like in database
             task_id - personal task id like in database
-            program_language - name of program language to test code
+            program_lang - name of program language to test code
+            status - tests' result
+            time - time for testing
+            size - load memory
         """
-    solution_status = models.IntegerField()
+    user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
     task_id = models.ForeignKey(Tasks, on_delete=models.CASCADE)
     program_lang = models.CharField(max_length=30)
+    status = models.CharField(max_length=50)
+    time = models.CharField(max_length=20)
+    size = models.CharField(max_length=7)
 
     def __str__(self) -> str:
         return self.task_id

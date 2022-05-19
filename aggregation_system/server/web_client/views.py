@@ -1,10 +1,12 @@
+import os
+
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .models import ResultSend, UserTypes, Users
-from .serializers import ResultSendSerializer
+from .models import CompleteTask, UserTypes, Users, Tasks
+from .serializers import CompleteTaskSerializer
 from .submit import submit_run
 import asyncio
 
@@ -116,7 +118,6 @@ def teacher_groups(request):
                       {'id': '345'},
                       {'id': '456'},
                   ]})
-    return Response({"check": serializer.data})
 
 
 @api_view(['POST'])
@@ -125,8 +126,7 @@ def check_send(request):
     :param request:
         user_id - personal user id like in database
         task_id - personal task id like in database
-        program_language - name of program language to test code
-        testing_stage - value in tuple of testing stage
+        program_lang - name of program language to test code
         code - file with the user's code
     :return:
         data with format...
@@ -139,28 +139,40 @@ def check_send(request):
 
     file.close()
 
-    result = asyncio.run(
+    test = asyncio.run(
         submit_run(
-            "/home/judges/000002/problems/20/all_solutions/20_python3.py",
+            path_file,
             "2",
             "python3",
-            "20",
+            data["task_id"],
         )
     )
-    # print(result)
-    return Response({"message": "Got some data!", "data": result})
+
+    os.remove(path_file)
+    result = CompleteTask(user_id=get_object_or_404(Users, id=data["user_id"]),
+                          task_id=get_object_or_404(Tasks, id=data["task_id"]),
+                          program_lang=data["program_lang"], status=test["STATUS"],
+                          time=test["TIME"], size=test["SIZE"])
+
+    result.save()
+
+    return Response({"message": "Got some data!", "data": test})
 
 
 @api_view(['GET'])
 def send_result(request):
     """ Request for ResultSend
+     :param request:
+        user_id - personal user id like in database
+        task_id - personal task id like in database
     :return:
          solution_status - value in tuple of solution status stage
          task_id - personal task id like in database
          program_language - name of program language to test code
     """
-    results = ResultSend.objects.all()
-    serializer = ResultSendSerializer(results, many=True)
+    data = request.headers
+    results = CompleteTask.objects.filter(user_id=data["user-id"]).filter(task_id=data["task-id"])
+    serializer = CompleteTaskSerializer(results, many=True)
     return Response({"check": serializer.data})
 
 

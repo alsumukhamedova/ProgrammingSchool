@@ -1,11 +1,11 @@
 from rest_framework import serializers
-from .models import ResultSend, CheckSend, Users
+from .models import CompleteTask, CheckSend, Users
 
 
-class ResultSendSerializer(serializers.ModelSerializer):
+class CompleteTaskSerializer(serializers.ModelSerializer):
     """Serializer for ResultSend class"""
     class Meta:
-        model = ResultSend
+        model = CompleteTask
         fields = '__all__'
 
 
