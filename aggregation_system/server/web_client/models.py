@@ -97,3 +97,19 @@ class CompleteTask(models.Model):
 
     def __str__(self) -> str:
         return self.task_id
+
+
+class StudentGroupInfo(models.Model):
+    teacher = models.ForeignKey(Users, on_delete=models.CASCADE)
+
+
+class GroupComposition(models.Model):
+    group_id = models.ForeignKey(StudentGroupInfo, on_delete=models.CASCADE)
+    student_id = models.ForeignKey(Users, on_delete=models.CASCADE)
+
+
+class MarkedTasks(models.Model):
+    group_id = models.ForeignKey(StudentGroupInfo, on_delete=models.CASCADE)
+    task_id = models.ForeignKey(Tasks, on_delete=models.CASCADE)
+    task_assigment_time = models.IntegerField()
+    time_solve_task = models.IntegerField()
