@@ -33,7 +33,7 @@
 <section class="col-12 container">
     <div class="row">
         <h1 class="text-center col-xxl-4 text-blue mt-xxl-5">{{ task.name }}</h1>
-        <h4 class="addGroup text-blue"><a href="/teacher/tasks/{{ task.id }}"><u>Описание задачи</u></a></h4>
+        <h4 class="addGroup text-blue" style="visibility: {% if disable_task_descr %}hidden{% else %}visible{% endif %}"><a href="/teacher/tasks/{{ task.id }}"><u>Описание задачи</u></a></h4>
         <div class="options row">
             <h5 class="text-blue w-25 d-flex justify-content-around">Баллы</h5>
         </div>

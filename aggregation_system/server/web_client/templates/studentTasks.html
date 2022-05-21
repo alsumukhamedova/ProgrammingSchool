@@ -38,17 +38,15 @@
 <section class="col-8 container">
     <h1 class="text-blue mt-lg-5">Задачи</h1>
     <div class="options row">
-        <h5 class="text-blue marked">Помечено</h5>
-        <h5 class="text-blue marked">Баллы</h5>
+        <h5 class="text-blue marked w-25">Баллы</h5>
     </div>
     <div class="d-flex flex-column tasksContainer justify-content-center">
         <div class="row align-items-center" id="taskNames">
-            {% for task_id in tasks %}
+            {% for task in tasks %}
             <div class="d-flex flex-row justify-content-between">
-                <a href="{{ task_id }}" class="item-text"><u>{{ task_id }}</u></a>
+                <a href="{{ task.id }}" class="item-text"><u>{{ task.name }}</u></a>
                 <div class="transparentColor w-25 d-flex justify-content-around">
-                    <p class="marked text-blue">Да</p>
-                    <p class="marked text-blue">0</p>
+                    <p class="marked text-blue">{{ task.points }}</p>
                 </div>
             </div>
             {% endfor %}

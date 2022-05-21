@@ -46,8 +46,7 @@
         <div class="row align-items-center" id="taskNames">
         {% for group in group_list %}
             <div class="d-flex flex-row justify-content-between">
-                {#        TODO HERE href        #}
-                <a href="studentTaskDescription.html" class="item-text"><u>{{ group.id }}</u></a>
+                <a href="groups/{{ group.id }}" class="item-text"><u>{{ group.id }}</u></a>
             </div>
         {% endfor %}
         </div>
