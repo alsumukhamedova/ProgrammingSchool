@@ -100,7 +100,8 @@ class CompleteTask(models.Model):
 
 
 class StudentGroupInfo(models.Model):
-    teacher = models.ForeignKey(Users, on_delete=models.CASCADE)
+    group_name = models.CharField(max_length=50, null=False, default="0")
+    teacher = models.ForeignKey(Users, on_delete=models.CASCADE, null=False)
 
 
 class GroupComposition(models.Model):

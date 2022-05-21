@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .models import CompleteTask, UserTypes, Users, Tasks
-from .serializers import CompleteTaskSerializer
+from .serializers import CompleteTaskSerializer, StudentGroupInfoSerializer
 from .submit import submit_run
 import asyncio
 
@@ -106,18 +106,12 @@ def teacher_task(request, task_id):
                   {'description': description})
 
 
-def teacher_groups(request):
+def teacher_groups(request, teacher):
+    results = CompleteTask.objects.filter(teacher=teacher)
+    context = {'group_list': results}
+
     return render(request, 'teacherGroups.html',
-                  {'group_list': [
-                      {'id': '123'},
-                      {'id': '234'},
-                      {'id': '345'},
-                      {'id': '456'},
-                      {'id': '123'},
-                      {'id': '234'},
-                      {'id': '345'},
-                      {'id': '456'},
-                  ]})
+                  context=context)
 
 
 @api_view(['POST'])
