@@ -1,10 +1,16 @@
-from django.shortcuts import render, get_object_or_404
+import os
 
-from .models import ResultSend, CheckSend, UserTypes, Users
-from .serializers import ResultSendSerializer, CheckSendSerializer, UsersSerializer
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from .models import CompleteTask, UserTypes, Users, Tasks
+from .serializers import CompleteTaskSerializer, StudentGroupInfoSerializer
+from .submit import submit_run
+import asyncio
+
+FILE_DIR = '/home/gypsyjr-virtual/PycharmProjects/aggregation_system/aggregation_system/server/web_client/files/'
 
 
 def index(request):
@@ -31,24 +37,26 @@ def profile_edit(request):
 
 def tasks(request):
     """
-    Отрисовывает все задания студента
-    :return: возвращает задания в формате словаря: {id: int, name: str, points: int}
-    """
+        Отрисовывает все задания студента
+        :return: возвращает задания в формате словаря: {id: int, name: str, points: int}
+        """
     return render(request, 'studentTasks.html',
                   {'tasks': [
-                      {"id": 123, "name": "newTask0", "points": 10},
-                      {"id": 234, "name": "newTask1", "points": 7},
-                      {"id": 345, "name": "newTask2", "points": 3},
-                      {"id": 456, "name": "newTask3", "points": 8}
+                      "123",
+                      "345",
+                      "456",
+                      "123",
+                      "345",
+                      "456"
                   ]})
 
 
 def task(request, task_id):
     """
-    Отрисовывает страницу одного задания по task_id + решение студента (last_solution) + результат (runtime и memory)
-    :param task_id: id задания из бд
-    :return: возвращает описание задания по task_id, последнее решение, runtime, memory
-    """
+        Отрисовывает страницу одного задания по task_id + решение студента (last_solution) + результат (runtime и memory)
+        :param task_id: id задания из бд
+        :return: возвращает описание задания по task_id, последнее решение, runtime, memory
+        """
     # try:
     #     p = Tasks.objects.get(pk=task_id)
     # except Tasks.DoesNotExist:
@@ -64,7 +72,7 @@ def task(request, task_id):
                    'runtime': runtime, 'memory': memory})
 
 
-def students_by_task(request, task_id):
+def group_statistics(request, task_id):
     """
     Отрисовывает список студентов с их баллами (с профиля преподавателя) по заданию task_id
     :param task_id: id задания из бд
@@ -131,11 +139,12 @@ def teacher_tasks(request):
     """
     return render(request, 'teacherTasks.html',
                   {'tasks': [
-                      {"id": 123, "name": "newTask0"},
-                      {"id": 234, "name": "newTask1"},
-                      {"id": 345, "name": "newTask2"},
-                      {"id": 456, "name": "newTask3"},
-                      {"id": 567, "name": "newTask4"},
+                      "123",
+                      "345",
+                      "456",
+                      "123",
+                      "345",
+                      "456"
                   ]})
 
 
@@ -150,18 +159,16 @@ def teacher_task(request, task_id):
                   {'description': description})
 
 
-def teacher_groups(request):
+def teacher_groups(request, teacher):
     """
     Отрисовывает страницу со списком групп с профиля преподавателя
     :return: возвращает список групп в формате {id: int, name: str}
     """
+    results = CompleteTask.objects.filter(teacher=teacher)
+    context = {'group_list': results}
+
     return render(request, 'teacherGroups.html',
-                  {'group_list': [
-                      {"id": 123, "name": "group1"},
-                      {"id": 234, "name": "group2"},
-                      {"id": 345, "name": "group3"},
-                      {"id": 456, "name": "group4"},
-                  ]})
+                  context=context)
 
 
 @api_view(['POST'])
@@ -170,26 +177,53 @@ def check_send(request):
     :param request:
         user_id - personal user id like in database
         task_id - personal task id like in database
-        program_language - name of program language to test code
-        testing_stage - value in tuple of testing stage
+        program_lang - name of program language to test code
         code - file with the user's code
     :return:
-        POST: Server gets some data
+        data with format...
     """
+    data = request.data
+    path_file = FILE_DIR + data["user_id"] + "_" + data["task_id"] + ".py"
 
-    return Response({"message": "Got some data!", "data": request.data})
+    with open(path_file, "w") as file:
+        file.write(data["code"])
+
+    file.close()
+
+    test = asyncio.run(
+        submit_run(
+            path_file,
+            "2",
+            "python3",
+            data["task_id"],
+        )
+    )
+
+    os.remove(path_file)
+    result = CompleteTask(user_id=get_object_or_404(Users, id=data["user_id"]),
+                          task_id=get_object_or_404(Tasks, id=data["task_id"]),
+                          program_lang=data["program_lang"], status=test["STATUS"],
+                          time=test["TIME"], size=test["SIZE"])
+
+    result.save()
+
+    return Response({"message": "Got some data!", "data": test})
 
 
 @api_view(['GET'])
 def send_result(request):
     """ Request for ResultSend
+     :param request:
+        user_id - personal user id like in database
+        task_id - personal task id like in database
     :return:
          solution_status - value in tuple of solution status stage
          task_id - personal task id like in database
          program_language - name of program language to test code
     """
-    results = ResultSend.objects.all()
-    serializer = ResultSendSerializer(results, many=True)
+    data = request.headers
+    results = CompleteTask.objects.filter(user_id=data["user-id"]).filter(task_id=data["task-id"])
+    serializer = CompleteTaskSerializer(results, many=True)
     return Response({"check": serializer.data})
 
 
@@ -201,6 +235,8 @@ def sign_up(request):
         user_login - user's login
         user_password - user's password
         user_type - student or teacher
+        user_mail - user's mail
+        user_name - user's name
 
     Returns:
             Error or message - 'Got some data!'
@@ -213,12 +249,14 @@ def sign_up(request):
         UserTypes.objects.create(user_type='teacher')
     form = request.data
 
-    if form['user-type'] == 'student':
-        user = Users(user_login=form['user-login'], user_password=form['user-password'],
-                     user_type=get_object_or_404(UserTypes, user_type='student'))
+    if form['user_type'] == 'student':
+        user = Users(user_login=form['user_login'], user_password=form['user_password'],
+                     user_type=get_object_or_404(UserTypes, user_type='student'), user_mail=form['user_mail'],
+                     user_name=form['user_name'])
     else:
-        user = Users(user_login=form['user-login'], user_password=form['user-password'],
-                     user_type=get_object_or_404(UserTypes, user_type='teacher'))
+        user = Users(user_login=form['user_login'], user_password=form['user_password'],
+                     user_type=get_object_or_404(UserTypes, user_type='teacher'), user_mail=form['user_mail'],
+                     user_name=form['user_name'])
 
     user.save()
     return Response({"message": "Got some data!", "data": request.data})
@@ -230,15 +268,30 @@ def login_user(request):
     Login form
     Args:
         user_login - user's login
+        user_mail - user's mail
         user_password - user's password
 
     Returns:
-        User:
+        Cookies:
             id - user's id
             user_login - user's login
-            user_type - '1' is a student or '2' is a teacher
+            user_type - student or teacher
+            user_mail - user's mail
+            user_name - user's name
     """
     form = request.headers
-    user = get_object_or_404(Users, user_login=form['user-login'], user_password=form['user-password'])
-    serializer = UsersSerializer(user, many=False)
-    return Response({"user": serializer.data})
+    if 'user-mail' in form:
+        user = get_object_or_404(Users, user_mail=form['user-mail'], user_password=form['user-password'])
+    else:
+        print(form['user-login'])
+        user = get_object_or_404(Users, user_login=form['user-login'], user_password=form['user-password'])
+
+    print(user.user_login)
+    response = Response()
+    response.set_cookie('id', user.id)
+    response.set_cookie('login', user.user_login)
+    response.set_cookie('mail', user.user_mail)
+    response.set_cookie('name', user.user_name)
+    response.set_cookie('type', user.user_type)
+
+    return response
