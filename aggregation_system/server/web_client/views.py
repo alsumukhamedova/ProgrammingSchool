@@ -5,7 +5,7 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .models import CompleteTask, UserTypes, Users, Tasks
+from .models import CompleteTask, UserTypes, Users, Tasks, StudentGroupInfo, GroupComposition, MarkedTasks
 from .serializers import CompleteTaskSerializer, StudentGroupInfoSerializer
 from .submit import submit_run
 import asyncio
@@ -40,15 +40,21 @@ def tasks(request):
         Отрисовывает все задания студента
         :return: возвращает задания в формате словаря: {id: int, name: str, points: int}
         """
-    return render(request, 'studentTasks.html',
-                  {'tasks': [
-                      "123",
-                      "345",
-                      "456",
-                      "123",
-                      "345",
-                      "456"
-                  ]})
+    student_id = request.COOKIES.get("id")
+
+    tasks_st = CompleteTask.objects.filter(user_id=student_id).values("task_id", "status")
+    tasks_info = Tasks.objects.values("id", "task_name")
+    context = {'tasks': []}
+    tasks_con = {}
+
+    for it in tasks_st:
+        tasks_con[it["id"]] = it["status"]
+
+    for it in tasks_info:
+        c = {"id": it["id"], "name": it["task_name"], "status": tasks_con[it["id"]]["status"]}
+        context["tasks"].append(c)
+
+    return render(request, 'studentTasks.html', context)
 
 
 def task(request, task_id):
@@ -61,15 +67,10 @@ def task(request, task_id):
     #     p = Tasks.objects.get(pk=task_id)
     # except Tasks.DoesNotExist:
     #     raise Http404("Task does not exist")
-    description = f'Test Task Description for task {task_id}'
-    last_solution = 'Last solution written'
-    runtime = 0  # last runtime
-    memory = 0  # last memory
-    runtime = f'{runtime} ms'
-    memory = f'{memory} Mb'
+
+    context = Tasks.objects.filter(id=task_id)
     return render(request, 'studentTaskDescription.html',
-                  {'description': description, 'last_solution': last_solution,
-                   'runtime': runtime, 'memory': memory})
+                  context)
 
 
 def group_statistics(request, task_id):
@@ -82,23 +83,34 @@ def group_statistics(request, task_id):
     #     p = Tasks.objects.get(pk=task_id)
     # except Tasks.DoesNotExist:
     #     raise Http404("Task does not exist")
-    person_list = [
-        {'name': 'Литвинов Вячевлав', 'score': 0},
-        {'name': 'Никоненко Андрей роцкер', 'score': 666},
-        {'name': 'Демидов Иван', 'score': 220},
-        {'name': 'Бурмистров Владимир', 'score': 5000},
-        {'name': 'Мухамедова Алсу', 'score': 404},
-        {'name': 'Мухамедова Алсу', 'score': 404},
-        {'name': 'Литвинов Вячевлав', 'score': 0},
-        {'name': 'Никоненко Андрей роцкер', 'score': 666},
-        {'name': 'Демидов Иван', 'score': 220},
-        {'name': 'Бурмистров Владимир', 'score': 5000},
-        {'name': 'Мухамедова Алсу', 'score': 404},
-        {'name': 'Мухамедова Алсу', 'score': 404},
-    ]
+    teacher_id = request.COOKIES.get("id")
+    groups = StudentGroupInfo.objects.filter(teacher=teacher_id).values("id")
+
+    users = {}
+    tasks_res = {}
+    user_group = {}
+
+    for it in Users.objects.values("id", "user_name"):
+        users[it["id"]] = it["user_name"]
+
+    for it in CompleteTask.objects.filter(task_id=task_id).values("user_id", "status"):
+        tasks_res[it["user_id"]] = it["status"]
+
+    for it in GroupComposition.objects.values("group_id", "student_id"):
+        user_group[it["group_id"]] = it["student_id"]
+
+    context = {'tasks': []}
+
+    for group in groups:
+        c = {
+            'name': users[user_group[group["id"]]],
+            'status': tasks_res[user_group[group["id"]]]
+        }
+        context["tasks"].append(c)
+
     return render(request, 'groupStatistic.html', {
-        'task': {'id': task_id, 'name': "Супер сложное задание 1"},
-        'person_list': person_list
+        'task': {'id': task_id},
+        'person_list': context
     })
 
 
@@ -112,6 +124,9 @@ def students_by_group(request, group_id):
     #     p = Tasks.objects.get(pk=task_id)
     # except Tasks.DoesNotExist:
     #     raise Http404("Task does not exist")
+
+
+
     person_list = [
         {'name': 'Литвинов Вячевлав', 'score': 0},
         {'name': 'Никоненко Андрей роцкер', 'score': 666},
@@ -137,15 +152,28 @@ def teacher_tasks(request):
     """
     отрисовывает все задания с профиля преподавателя в формате {id: int, name: str}
     """
-    return render(request, 'teacherTasks.html',
-                  {'tasks': [
-                      "123",
-                      "345",
-                      "456",
-                      "123",
-                      "345",
-                      "456"
-                  ]})
+    teacher_id = request.COOKIES.get("id")
+    groups = StudentGroupInfo.objects.filter(teacher=teacher_id).values("id")
+
+    tasks_info = Tasks.objects.values("id", "task_name")
+    tasks_marked = MarkedTasks.objects.values("group_id", "task_id")
+    m_tasks = {}
+    tasks_con = {}
+    for it in tasks_info:
+        tasks_con[it["id"]] = it["task_name"]
+
+    for it in tasks_marked:
+        m_tasks[it["group_id"]] = it["task_id"]
+
+    context = {"tasks": []}
+
+    for group in groups:
+        c = {}
+        task_id = m_tasks[group]
+        c[m_tasks[group]] = tasks_con[task_id]
+        context["tasks"].append(c)
+
+    return render(request, 'teacherTasks.html', context)
 
 
 def teacher_task(request, task_id):
@@ -154,9 +182,9 @@ def teacher_task(request, task_id):
     :param task_id: id задачи из бд
     :return: описание задачи
     """
-    description = f'Test Task Description for task {task_id}'
-    return render(request, 'teacherTaskDescription.html',
-                  {'description': description})
+    tasks_info = Tasks.objects.filter(id=task_id)
+    context = {'description': tasks_info}
+    return render(request, 'teacherTaskDescription.html', context)
 
 
 def teacher_groups(request, teacher):
@@ -164,11 +192,16 @@ def teacher_groups(request, teacher):
     Отрисовывает страницу со списком групп с профиля преподавателя
     :return: возвращает список групп в формате {id: int, name: str}
     """
-    results = CompleteTask.objects.filter(teacher=teacher)
+    results = StudentGroupInfo.objects.filter(teacher=teacher)
+    # context = {}
+    #
+    # for res in results:
+    #     context[res["id"]] = res["group_name"]
+
     context = {'group_list': results}
 
     return render(request, 'teacherGroups.html',
-                  context=context)
+                  context)
 
 
 @api_view(['POST'])
