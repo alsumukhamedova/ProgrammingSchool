@@ -2,7 +2,7 @@ from django.conf.urls.static import static
 from django.urls import path
 
 # from .views import ResultSendView, CheckSendView
-from .views import (index, send_result, check_send, tasks, task, students_by_task,
+from .views import (index, send_result, check_send, tasks, task,
                     teacher_groups, teacher_tasks, teacher_task,
                     login, register, reset_password, profile_edit, sign_up, login_user, students_by_group)
 
@@ -24,7 +24,7 @@ urlpatterns = [
                   path('profile_edit/', profile_edit),
                   path('tasks/', tasks, name='tasks'),
                   path('tasks/<int:task_id>', task, name='task'),
-                  path('statistics/<int:task_id>', students_by_task, name='group_statistics'),
+                #   path('statistics/<int:task_id>', students_by_task, name='group_statistics'),
 
                   path('teacher/groups', teacher_groups, name='teacher_groups'),
                   path('teacher/groups/<int:group_id>', students_by_group, name='students_by_group'),
