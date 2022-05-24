@@ -316,7 +316,7 @@ def sign_up(request):
         user_type - student or teacher
         user_mail - user's mail
         user_name - user's name
-
+        group_name - student's group
     Returns:
             Error or message - 'Got some data!'
 
@@ -332,12 +332,17 @@ def sign_up(request):
         user = Users(user_login=form['user_login'], user_password=form['user_password'],
                      user_type=get_object_or_404(UserTypes, user_type='student'), user_mail=form['user_mail'],
                      user_name=form['user_name'])
+        user.save()
+        group_name = StudentGroupInfo.objects.filter(group_name=form["group_name"]).values("id")[0]["id"]
+        student_group = GroupComposition(group_id=get_object_or_404(StudentGroupInfo, group_name=group_name),
+                                         student_id=get_object_or_404(Users, user_login=form['user_login']))
+        student_group.save()
     else:
         user = Users(user_login=form['user_login'], user_password=form['user_password'],
                      user_type=get_object_or_404(UserTypes, user_type='teacher'), user_mail=form['user_mail'],
                      user_name=form['user_name'])
+        user.save()
 
-    user.save()
     return Response({"message": "Got some data!", "data": request.data})
 
 
@@ -374,3 +379,11 @@ def login_user(request):
     response.set_cookie('type', user.user_type)
 
     return response
+
+
+@api_view(['GET', 'POST'])
+def teacher_groups(request):
+    if request.method == 'POST':
+        teacher_id = request.COOKIES.get("id")
+        data = request.data
+
