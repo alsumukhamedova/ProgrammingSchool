@@ -256,10 +256,10 @@ def check_send(request):
 
     result.save()
 
-    code = CheckSend(user_id=get_object_or_404(Users, id=user_id),
-                     task_id=get_object_or_404(Tasks, id=data["task_id"]),
-                     program_lang=data["program_lang"], code=data["code"])
-    code.save()
+    # code = CheckSend(user_id=get_object_or_404(Users, id=user_id),
+    #                  task_id=get_object_or_404(Tasks, id=data["task_id"]),
+    #                  program_lang=data["program_lang"], code=data["code"])
+    # code.save()
 
     return Response({"message": "Got some data!", "data": test})
 
