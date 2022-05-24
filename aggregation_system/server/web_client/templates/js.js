@@ -51,7 +51,8 @@ function register() {
            "user_login": document.querySelector("body > main > section > div:nth-child(3) > input").value,
            "user_mail": document.querySelector("body > main > section > div:nth-child(4) > input").value,
            "user_password": document.querySelector("body > main > section > div:nth-child(5) > input").value,
-           "user_type": document.querySelector("body > main > section > div:nth-child(6) > input").value,
+           "user_type": document.querySelector("body > main > section > div:nth-child(6) > select").value,
+           "group_name": document.querySelector("body > main > section > div:nth-child(7) > select").value,
        },
        success: function() {
            window.location.href='/login'

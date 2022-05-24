@@ -29,10 +29,11 @@ def register(request):
     }
 
     for it in groups:
-        c = {
-            it["id"]: it["group_name"]
+        group = {
+            "id": it["id"],
+            "name": it["group_name"]
         }
-        context["groups"].append(c)
+        context["groups"].append(group)
     return render(request, 'registration.html', context)
 
 
@@ -159,8 +160,6 @@ def students_by_group(request, group_id):
     #     p = Tasks.objects.get(pk=task_id)
     # except Tasks.DoesNotExist:
     #     raise Http404("Task does not exist")
-
-
 
     person_list = [
         {'name': 'Литвинов Вячевлав', 'score': 0},
@@ -386,4 +385,3 @@ def teacher_groups(request):
     if request.method == 'POST':
         teacher_id = request.COOKIES.get("id")
         data = request.data
-
