@@ -397,6 +397,9 @@ def teacher_groups(request):
         group = StudentGroupInfo(group_name=data["group_name"],
                                  teacher=get_object_or_404(Users, id=teacher_id))
         group.save()
+        return Response({"message": "Got some data!"})
 
-    groups = StudentGroupInfo.filter(teacher_id=teacher_id).values("group_name")
+    groups = StudentGroupInfo.filter(teacher_id=teacher_id)
+    serializer = StudentGroupInfoSerializer(groups, True)
+    return Response({"check": serializer.data})
 
