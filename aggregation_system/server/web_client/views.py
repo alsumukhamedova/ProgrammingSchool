@@ -328,19 +328,18 @@ def sign_up(request):
         UserTypes.objects.create(user_type='teacher')
     form = request.data
 
-    if request.POST.get('user_type') == 'student':
-        user = Users(user_login=request.POST.get('user_login'), user_password=request.POST.get('user_password'),
-                     user_type=get_object_or_404(UserTypes, user_type='student'),
-                     user_mail=request.POST.get('user_mail'), user_name=request.POST.get('user_name'))
+    if form['user_type'] == 'student':
+        user = Users(user_login=form['user_login'], user_password=form['user_password'],
+                     user_type=get_object_or_404(UserTypes, user_type='student'), user_mail=form['user_mail'],
+                     user_name=form['user_name'])
         user.save()
-        group_name = StudentGroupInfo.objects.filter(group_name=form["group_name"]).values("id")[0]["id"]
-        student_group = GroupComposition(group_id=get_object_or_404(StudentGroupInfo, group_name=group_name),
+        student_group = GroupComposition(group_id=get_object_or_404(StudentGroupInfo, id=form["group_name"]),
                                          student_id=get_object_or_404(Users, user_login=form['user_login']))
         student_group.save()
     else:
-        user = Users(user_login=request.POST.get('user_login'), user_password=request.POST.get('user_password'),
-                     user_type=get_object_or_404(UserTypes, user_type='teacher'),
-                     user_mail=request.POST.get('user_mail'), user_name=request.POST.get('user_name'))
+        user = Users(user_login=form['user_login'], user_password=form['user_password'],
+                     user_type=get_object_or_404(UserTypes, user_type='teacher'), user_mail=form['user_mail'],
+                     user_name=form['user_name'])
         user.save()
 
     return Response({"message": "Got some data!", "data": request.data})
@@ -391,9 +390,13 @@ def teacher_groups(request):
                     Error or message - 'Got some data!'
 
         """
+    teacher_id = request.COOKIES.get("id")
+
     if request.method == 'POST':
-        teacher_id = request.COOKIES.get("id")
         data = request.data
         group = StudentGroupInfo(group_name=data["group_name"],
                                  teacher=get_object_or_404(Users, id=teacher_id))
         group.save()
+
+    groups = StudentGroupInfo.filter(teacher_id=teacher_id).values("group_name")
+
