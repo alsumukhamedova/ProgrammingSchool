@@ -23,7 +23,17 @@ def login(request):
 
 
 def register(request):
-    return render(request, 'registration.html')
+    groups = StudentGroupInfo.objects.values("id", "group_name")
+    context = {
+        "groups": []
+    }
+
+    for it in groups:
+        c = {
+            it["id"]: it["group_name"]
+        }
+        context["groups"].append(c)
+    return render(request, 'registration.html', context)
 
 
 def reset_password(request):
@@ -245,7 +255,7 @@ def check_send(request):
     path_file = FILE_DIR + user_id + "_" + data["task_id"] + ".py"
 
     with open(path_file, "w") as file:
-        file.write(data["code"])
+        file.write(request.data["code"])
 
     file.close()
 
