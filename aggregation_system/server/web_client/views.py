@@ -5,7 +5,7 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .models import CompleteTask, UserTypes, Users, Tasks, StudentGroupInfo, GroupComposition, MarkedTasks
+from .models import Marks, CompleteTask, UserTypes, Users, Tasks, StudentGroupInfo, GroupComposition, MarkedTasks
 from .serializers import CompleteTaskSerializer, StudentGroupInfoSerializer
 from .submit import submit_run
 import asyncio
@@ -68,7 +68,20 @@ def task(request, task_id):
     # except Tasks.DoesNotExist:
     #     raise Http404("Task does not exist")
 
-    context = Tasks.objects.filter(id=task_id)
+    # for it in context:
+    #     print(it["task_name"])
+    it = Tasks.objects.filter(id=task_id).values()[0]
+    dif_lvl = Marks.objects.filter(id=it["difficulty_level_id"]).values("mark_description")[0]
+    context = {
+        "id": it["id"],
+        "task_name": it["task_name"],
+        "task_description": it["task_description"],
+        "test_data": it["test_data"],
+        "time_to_solve": it["time_to_solve"],
+        "resource_load": it["resource_load"],
+        "difficulty_level": dif_lvl["mark_description"]
+    }
+
     return render(request, 'studentTaskDescription.html',
                   context)
 
