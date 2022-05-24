@@ -222,18 +222,21 @@ def teacher_task(request, task_id):
     return render(request, 'teacherTaskDescription.html', context)
 
 
-def teacher_groups(request, teacher):
+def teacher_groups(request):
     """
     Отрисовывает страницу со списком групп с профиля преподавателя
     :return: возвращает список групп в формате {id: int, name: str}
     """
-    results = StudentGroupInfo.objects.filter(teacher_id=teacher)
-    # context = {}
-    #
-    # for res in results:
-    #     context[res["id"]] = res["group_name"]
+    teacher_id = request.COOKIES.get("id")
+    groups = StudentGroupInfo.objects.filter(teacher_id=teacher_id).values("group_name")
 
-    context = {'group_list': results}
+    context = {'group_list': []}
+
+    for group in groups:
+        con = {
+            "group_name": group["group_name"]
+        }
+        context["group_list"].append(con)
 
     return render(request, 'teacherGroups.html',
                   context)
