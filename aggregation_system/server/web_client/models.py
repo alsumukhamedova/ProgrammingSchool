@@ -71,8 +71,10 @@ class CheckSend(models.Model):
     user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
     task_id = models.ForeignKey(Tasks, on_delete=models.CASCADE)
     program_lang = models.CharField(max_length=30)
-    testing_stage = models.IntegerField()
     code = models.TextField()
+
+    class Meta:
+        unique_together = ('user_id', 'task_id',)
 
     def __str__(self) -> str:
         return self.user_id

@@ -5,7 +5,7 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .models import Marks, CompleteTask, UserTypes, Users, Tasks, StudentGroupInfo, GroupComposition, MarkedTasks
+from .models import Marks, CompleteTask, UserTypes, Users, Tasks, StudentGroupInfo, GroupComposition, MarkedTasks, CheckSend
 from .serializers import CompleteTaskSerializer, StudentGroupInfoSerializer
 from .submit import submit_run
 import asyncio
@@ -72,6 +72,7 @@ def task(request, task_id):
     #     print(it["task_name"])
     it = Tasks.objects.filter(id=task_id).values()[0]
     dif_lvl = Marks.objects.filter(id=it["difficulty_level_id"]).values("mark_description")[0]
+
     context = {
         "id": it["id"],
         "task_name": it["task_name"],
@@ -79,7 +80,8 @@ def task(request, task_id):
         "test_data": it["test_data"],
         "time_to_solve": it["time_to_solve"],
         "resource_load": it["resource_load"],
-        "difficulty_level": dif_lvl["mark_description"]
+        "difficulty_level": dif_lvl["mark_description"],
+        "last_solution": ""
     }
 
     return render(request, 'studentTaskDescription.html',
@@ -229,7 +231,8 @@ def check_send(request):
         data with format...
     """
     data = request.data
-    path_file = FILE_DIR + data["user_id"] + "_" + data["task_id"] + ".py"
+    user_id = request.COOKIES.get("id")
+    path_file = FILE_DIR + user_id + "_" + data["task_id"] + ".py"
 
     with open(path_file, "w") as file:
         file.write(data["code"])
@@ -246,12 +249,17 @@ def check_send(request):
     )
 
     os.remove(path_file)
-    result = CompleteTask(user_id=get_object_or_404(Users, id=data["user_id"]),
+    result = CompleteTask(user_id=get_object_or_404(Users, id=user_id),
                           task_id=get_object_or_404(Tasks, id=data["task_id"]),
                           program_lang=data["program_lang"], status=test["STATUS"],
                           time=test["TIME"], size=test["SIZE"])
 
     result.save()
+
+    code = CheckSend(user_id=get_object_or_404(Users, id=user_id),
+                     task_id=get_object_or_404(Tasks, id=data["task_id"]),
+                     program_lang=data["program_lang"], code=data["code"])
+    code.save()
 
     return Response({"message": "Got some data!", "data": test})
 
@@ -268,7 +276,8 @@ def send_result(request):
          program_language - name of program language to test code
     """
     data = request.headers
-    results = CompleteTask.objects.filter(user_id=data["user-id"]).filter(task_id=data["task-id"])
+    user_id = request.COOKIES.get("id")
+    results = CompleteTask.objects.filter(user_id=user_id).filter(task_id=data["task-id"])
     serializer = CompleteTaskSerializer(results, many=True)
     return Response({"check": serializer.data})
 
