@@ -43,9 +43,6 @@ function register() {
     $.ajax({
        url: "/sign-up/",
        type: "POST",
-        headers: {
-           "X-CSRFToken": document.cookie.match(new RegExp('(^| )csrftoken=([^;]+)'))[2]
-        },
        data: {
            "user_name": document.querySelector("body > main > section > div:nth-child(2) > input").value,
            "user_login": document.querySelector("body > main > section > div:nth-child(3) > input").value,
