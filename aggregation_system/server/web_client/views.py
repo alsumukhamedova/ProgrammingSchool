@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.db import IntegrityError
 
 from .models import Marks, CompleteTask, UserTypes, Users, Tasks, StudentGroupInfo, GroupComposition, MarkedTasks, CheckSend
 from .serializers import CompleteTaskSerializer, StudentGroupInfoSerializer
@@ -42,7 +43,7 @@ def tasks(request):
         """
     student_id = request.COOKIES.get("id")
 
-    tasks_st = CompleteTask.objects.filter(user_id=student_id).values("task_id", "status")
+    tasks_st = CompleteTask.objects.filter(user_id=student_id).values("id", "task_id", "status")
     tasks_info = Tasks.objects.values("id", "task_name")
     context = {'tasks': []}
     tasks_con = {}
@@ -51,7 +52,11 @@ def tasks(request):
         tasks_con[it["id"]] = it["status"]
 
     for it in tasks_info:
-        c = {"id": it["id"], "name": it["task_name"], "status": tasks_con[it["id"]]["status"]}
+        c = {
+            "id": it["id"],
+            "name": it["task_name"],
+            "status": tasks_con[it["id"]]
+        }
         context["tasks"].append(c)
 
     return render(request, 'studentTasks.html', context)
@@ -72,6 +77,11 @@ def task(request, task_id):
     #     print(it["task_name"])
     it = Tasks.objects.filter(id=task_id).values()[0]
     dif_lvl = Marks.objects.filter(id=it["difficulty_level_id"]).values("mark_description")[0]
+    user_id = request.COOKIES.get("id")
+    try:
+        code = CheckSend.objects.filter(user_id=user_id, task_id_id=task_id).values("code")[0]["code"]
+    except IndexError:
+        code = ""
 
     context = {
         "id": it["id"],
@@ -81,7 +91,7 @@ def task(request, task_id):
         "time_to_solve": it["time_to_solve"],
         "resource_load": it["resource_load"],
         "difficulty_level": dif_lvl["mark_description"],
-        "last_solution": ""
+        "last_solution": code
     }
 
     return render(request, 'studentTaskDescription.html',
@@ -168,7 +178,7 @@ def teacher_tasks(request):
     отрисовывает все задания с профиля преподавателя в формате {id: int, name: str}
     """
     teacher_id = request.COOKIES.get("id")
-    groups = StudentGroupInfo.objects.filter(teacher=teacher_id).values("id")
+    groups = StudentGroupInfo.objects.filter(teacher_id=teacher_id).values("id")
 
     tasks_info = Tasks.objects.values("id", "task_name")
     tasks_marked = MarkedTasks.objects.values("group_id", "task_id")
@@ -207,7 +217,7 @@ def teacher_groups(request, teacher):
     Отрисовывает страницу со списком групп с профиля преподавателя
     :return: возвращает список групп в формате {id: int, name: str}
     """
-    results = StudentGroupInfo.objects.filter(teacher=teacher)
+    results = StudentGroupInfo.objects.filter(teacher_id=teacher)
     # context = {}
     #
     # for res in results:
@@ -256,10 +266,14 @@ def check_send(request):
 
     result.save()
 
-    # code = CheckSend(user_id=get_object_or_404(Users, id=user_id),
-    #                  task_id=get_object_or_404(Tasks, id=data["task_id"]),
-    #                  program_lang=data["program_lang"], code=data["code"])
-    # code.save()
+    code = CheckSend(user_id=get_object_or_404(Users, id=user_id),
+                     task_id=get_object_or_404(Tasks, id=data["task_id"]),
+                     program_lang=data["program_lang"], code=data["code"])
+
+    try:
+        code.save()
+    except IntegrityError:
+        CheckSend.objects.filter(user_id=user_id, task_id_id=data["task_id"]).update(code=data["code"])
 
     return Response({"message": "Got some data!", "data": test})
 
