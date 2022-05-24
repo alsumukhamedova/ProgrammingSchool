@@ -383,7 +383,7 @@ def login_user(request):
     return response
 
 
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 def teacher_groups_add_get(request):
     """
         POST:
@@ -394,15 +394,10 @@ def teacher_groups_add_get(request):
 
         """
     teacher_id = request.COOKIES.get("id")
+    data = request.data
+    group = StudentGroupInfo(group_name=data["group_name"],
+                             teacher=get_object_or_404(Users, id=teacher_id))
+    group.save()
+    return Response({"message": "Got some data!"})
 
-    if request.method == 'POST':
-        data = request.data
-        group = StudentGroupInfo(group_name=data["group_name"],
-                                 teacher=get_object_or_404(Users, id=teacher_id))
-        group.save()
-        return Response({"message": "Got some data!"})
-
-    groups = StudentGroupInfo.objects.filter(teacher_id=teacher_id)
-    serializer = StudentGroupInfoSerializer(groups, many=True)
-    return Response({"check": serializer.data})
 
