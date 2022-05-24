@@ -102,7 +102,7 @@ class CompleteTask(models.Model):
 
 
 class StudentGroupInfo(models.Model):
-    group_name = models.CharField(max_length=50, null=False, default="0")
+    group_name = models.CharField(max_length=50, null=False, default="0", unique=True)
     teacher = models.ForeignKey(Users, on_delete=models.CASCADE, null=False)
 
 
