@@ -32,7 +32,7 @@ def reset_password(request):
 def profile_edit(request):
     # if student, render studentProfileEdit.html
     # if teacher, render teacherProfielEdit.html
-    return render(request, 'studentProfileEdit.html')
+    return render(request, 'studentProfileEdit.html', {'full_name': request.COOKIES.get("name")})
 
 
 def tasks(request):
