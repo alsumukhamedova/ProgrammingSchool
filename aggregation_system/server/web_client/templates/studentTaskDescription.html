@@ -38,12 +38,13 @@
 <section class="col-12 parts d-flex justify-content-center flex-row">
     <div class="col-5 d-flex flex-column justify-content-lg-between">
         <div class="row taskDescription w-100 d-block" id="taskDescription">
-            <p>{{ description }}</p>
+            <h3>{{ task_name }}</h3>
+            <p>{{ task_description }}</p>
         </div>
         <div class="row taskDescription w-100 d-block" id="taskDescription">
             <div  class="text">
-                <p>Runtime: {{ runtime }}</p>
-                <p>Memory: {{ memory }}</p>
+                <p>Runtime: {{ time_to_solve }}</p>
+                <p>Memory: {{ resource_load }}</p>
             </div>
         </div>
         <div class="taskFooter">
