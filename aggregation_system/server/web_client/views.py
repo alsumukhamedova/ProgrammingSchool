@@ -381,7 +381,7 @@ def login_user(request):
 
 
 @api_view(['GET', 'POST'])
-def teacher_groups(request):
+def teacher_groups_add_get(request):
     """
         POST:
             Args:
@@ -400,6 +400,6 @@ def teacher_groups(request):
         return Response({"message": "Got some data!"})
 
     groups = StudentGroupInfo.objects.filter(teacher_id=teacher_id)
-    serializer = StudentGroupInfoSerializer(groups, True)
+    serializer = StudentGroupInfoSerializer(groups, many=True)
     return Response({"check": serializer.data})
 

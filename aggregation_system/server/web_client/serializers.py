@@ -25,4 +25,4 @@ class UsersSerializer(serializers.ModelSerializer):
 class StudentGroupInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentGroupInfo
-        fields = 'group_name'
+        fields = ('group_name',)
