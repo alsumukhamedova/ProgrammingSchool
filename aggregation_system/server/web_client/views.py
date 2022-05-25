@@ -394,7 +394,6 @@ def teacher_groups_add(request):
         """
     teacher_id = request.COOKIES.get("id")
     data = request.data
-    print("Pizdec\n\n", data["group_name"])
     group = StudentGroupInfo(group_name=data["group_name"],
                              teacher=get_object_or_404(Users, id=teacher_id))
     group.save()
