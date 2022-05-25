@@ -54,22 +54,23 @@ def tasks(request):
         :return: возвращает задания в формате словаря: {id: int, name: str, points: int}
         """
     student_id = request.COOKIES.get("id")
+    group = GroupComposition.objects.filter(student_id=student_id).values("group_id")[0]
 
-    tasks_st = CompleteTask.objects.filter(user_id=student_id).values("id", "task_id", "status")
+    tasks_st = MarkedTasks.objects.filter(group_id=group["group_id"]).values("id", "task_id")
     tasks_info = Tasks.objects.values("id", "task_name")
     context = {'tasks': []}
     tasks_con = {}
 
     for it in tasks_st:
-        tasks_con[it["id"]] = it["status"]
+        tasks_con[it["id"]] = it["task_id"]
 
     for it in tasks_info:
-        c = {
-            "id": it["id"],
-            "name": it["task_name"],
-            "status": tasks_con[it["id"]]
-        }
-        context["tasks"].append(c)
+        if it["id"] in tasks_con:
+            c = {
+                "id": it["id"],
+                "name": it["task_name"]
+            }
+            context["tasks"].append(c)
 
     return render(request, 'studentTasks.html', context)
 
@@ -369,10 +370,8 @@ def login_user(request):
     if 'user-mail' in form:
         user = get_object_or_404(Users, user_mail=form['user-mail'], user_password=form['user-password'])
     else:
-        print(form['user-login'])
         user = get_object_or_404(Users, user_login=form['user-login'], user_password=form['user-password'])
 
-    print(user.user_login)
     response = Response()
     response.set_cookie('id', user.id)
     response.set_cookie('login', user.user_login)
