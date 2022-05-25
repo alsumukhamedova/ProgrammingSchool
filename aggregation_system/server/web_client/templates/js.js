@@ -70,6 +70,7 @@ function post_solution() {
           task_id : window.location.pathname.split('/')[window.location.pathname.split('/').length - 1],
           program_language : editor.getSession().getMode().$id,
           testing_stage : "1",
+          code: editor.getValue();
       },
       success: function (data,status,xhr) {   // success callback function
          alert('Success ' + data.message);
@@ -90,8 +91,7 @@ function tryGetCheckResult() {
           task_id : window.location.pathname.split('/')[window.location.pathname.split('/').length - 1],
       },
       success: function (data,status,xhr) {   // success callback function
-         alert('Success ' + data.message);
-         var ooa = data;
+         alert('Вы успешно решили задачу!');
       },
       error: function (jqXhr, textStatus, errorMessage) { // error callback
           console.log('Error: ' + errorMessage);
@@ -99,3 +99,42 @@ function tryGetCheckResult() {
       }
     });
 }
+// const popup = document.querySelector('.popup');
+// const popupClose = popup.querySelector('.popup__close');
+// const addButton = document.querySelector('.addButton');
+// const placeForm = document.forms.elementInfo;
+// const cardsContainer = document.querySelector('.tasksContainer');
+// const group = document.querySelector('.group');
+//
+// function openPopup(popup) {
+//     popup.classList.add('popup_opened');
+// }
+// function closePopup() {
+//     popup.classList.remove('popup_opened');
+// }
+// // function createCard(cardData) {
+// //     const cardTemplate = document.querySelector('.tasksContainer').content;
+// //     const cardElement = cardTemplate.cloneNode(true);
+// //     cardElement.querySelector('.element__name').textContent = cardData.name;
+// //     return cardElement;
+// // }
+//
+// // function renderCard(name) {
+// //     const cardData = {'name': name};
+// //     cardsContainer.prepend(createCard(cardData));
+// // }
+//
+// addButton.addEventListener('click', function () {
+//     openPopup(popup);
+// });
+// // popupClose.addEventListener('click', function () {
+// //     closePopup(popup);
+// // });
+// // placeForm.addEventListener('submit', function (evt) {
+// //     evt.preventDefault();
+// //     renderCard(name.value);
+// //     closePopup(popup);
+// //     placeForm.reset();
+// // })
+// addButton.addEventListener('click', openPopup);
+// popupClose.addEventListener('click', closePopup);
