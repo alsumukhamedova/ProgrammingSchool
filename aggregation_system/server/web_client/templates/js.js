@@ -8,6 +8,13 @@ function changeMode() {
     editor.getSession().setMode(document.querySelector('#-mode').value);
 }
 
+function getCookie(name) {
+    let cook = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'))
+    if (cook != null) {
+        return cook[2];
+    }
+}
+
 function proceed(code) {
     var form = document.createElement('form');
     var button = document.getElementsByClassName("saveSolutionButton")[0];
@@ -31,7 +38,12 @@ function login() {
            "user-password": document.querySelector("body > main > section > div.form-group > input").value,
        },
        success: function() {
-           window.location.href='/tasks'
+           let type = getCookie("type");
+           let tasks = '/tasks';
+           if (type === "teacher") {
+               tasks = "teacher" + tasks
+           }
+           window.location.href=tasks
        },
        error: function() {
            document.getElementById('incorrectPassword').style.visibility = 'visible';
@@ -87,7 +99,7 @@ function tryGetCheckResult() {
   $.ajax('/request/check/',
     {
       headers: {
-          user_id : document.cookie.match(new RegExp('(^| )id=([^;]+)'))[2],
+          user_id : getCookie("id"),
           task_id : window.location.pathname.split('/')[window.location.pathname.split('/').length - 1],
       },
       success: function (data,status,xhr) {   // success callback function

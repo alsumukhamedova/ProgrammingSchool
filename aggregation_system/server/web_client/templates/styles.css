@@ -526,7 +526,7 @@ section {
     font-size: 18px;
     line-height: 22px;
     text-align: center;
-    background-color: rgba(0, 0, 0, 1);
+    background-color: #8DB11B;
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
     color: #FFFFFF;
     border-radius: 2px;
@@ -535,7 +535,7 @@ section {
 }
 
 .popup__button:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #8DB11B;
 }
 
 .popup__button:focus {

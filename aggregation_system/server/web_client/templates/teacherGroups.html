@@ -59,11 +59,11 @@
     </div>
     <div class="popup">
         <div class="popup__container">
-            <button class="popup__close" type="button"  onclick="return closePopup()"><img src="./images/CloseIconImage.svg"></button>
+            <button class="popup__close" type="button"  onclick="return closePopup()"><img src="{% static './images/CloseIconImage.svg' %}"></button>
             <h3 class="popup__title">Добавить группу</h3>
             <form class="popup__form form" action="#" method="POST" name="elementInfo">
                 <input type="text" name="group" placeholder="Название группы" class="popup__input">
-                <button type="submit" class="popup__button">Добавить</button>
+                <button type="submit" class="popup__button btn shadow saveProfileButton rounded-pill ">Добавить</button>
             </form>
         </div>
     </div>
