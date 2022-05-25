@@ -258,7 +258,7 @@ def check_send(request):
     path_file = FILE_DIR + user_id + "_" + data["task_id"] + ".py"
 
     with open(path_file, "w") as file:
-        file.write(request.data["code"])
+        file.write(data["code"])
 
     file.close()
 
@@ -274,21 +274,21 @@ def check_send(request):
     os.remove(path_file)
     result = CompleteTask(user_id=get_object_or_404(Users, id=user_id),
                           task_id=get_object_or_404(Tasks, id=data["task_id"]),
-                          program_lang=data["program_lang"], status=test["STATUS"],
+                          program_lang="Python", status=test["STATUS"],
                           time=test["TIME"], size=test["SIZE"])
 
     result.save()
 
     code = CheckSend(user_id=get_object_or_404(Users, id=user_id),
                      task_id=get_object_or_404(Tasks, id=data["task_id"]),
-                     program_lang=data["program_lang"], code=data["code"])
+                     program_lang="Python", code=data["code"])
 
     try:
         code.save()
     except IntegrityError:
         CheckSend.objects.filter(user_id=user_id, task_id_id=data["task_id"]).update(code=data["code"])
 
-    return Response({"message": "Got some data!", "data": test})
+    return Response({"message": test["STATUS"], "data": test})
 
 
 @api_view(['GET'])

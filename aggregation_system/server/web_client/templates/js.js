@@ -70,7 +70,7 @@ function post_solution() {
           task_id : window.location.pathname.split('/')[window.location.pathname.split('/').length - 1],
           program_language : editor.getSession().getMode().$id,
           testing_stage : "1",
-          code: editor.getValue();
+          code: editor.getValue(),
       },
       success: function (data,status,xhr) {   // success callback function
          alert('Success ' + data.message);
