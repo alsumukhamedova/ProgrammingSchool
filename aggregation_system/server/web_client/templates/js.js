@@ -99,19 +99,20 @@ function tryGetCheckResult() {
       }
     });
 }
-// const popup = document.querySelector('.popup');
 // const popupClose = popup.querySelector('.popup__close');
 // const addButton = document.querySelector('.addButton');
 // const placeForm = document.forms.elementInfo;
 // const cardsContainer = document.querySelector('.tasksContainer');
 // const group = document.querySelector('.group');
 //
-// function openPopup(popup) {
-//     popup.classList.add('popup_opened');
-// }
-// function closePopup() {
-//     popup.classList.remove('popup_opened');
-// }
+function openPopup() {
+    const popup = document.querySelector('.popup');
+    popup.classList.add('popup_opened');
+}
+function closePopup() {
+    const popup = document.querySelector('.popup');
+    popup.classList.remove('popup_opened');
+}
 // // function createCard(cardData) {
 // //     const cardTemplate = document.querySelector('.tasksContainer').content;
 // //     const cardElement = cardTemplate.cloneNode(true);
