@@ -162,6 +162,7 @@ def students_by_group(request, group_id):
     #     p = Tasks.objects.get(pk=task_id)
     # except Tasks.DoesNotExist:
     #     raise Http404("Task does not exist")
+    group = StudentGroupInfo.objects.get(id=group_id)
 
     person_list = [
         {'name': 'Литвинов Вячевлав', 'score': 0},
@@ -179,7 +180,7 @@ def students_by_group(request, group_id):
     ]
     return render(request, 'groupStatistic.html', {
         'disable_task_descr': True,  # оставить True, не трогать
-        'task': {'name': "БИВ190"},  # оставить название "task", менять name
+        'task': {'name': group.group_name},  # оставить название "task", менять name
         'person_list': person_list
     })
 
@@ -232,13 +233,14 @@ def teacher_groups(request):
     :return: возвращает список групп в формате {id: int, name: str}
     """
     teacher_id = request.COOKIES.get("id")
-    groups = StudentGroupInfo.objects.filter(teacher_id=teacher_id).values("group_name")
+    groups = StudentGroupInfo.objects.filter(teacher_id=teacher_id)
 
     context = {'group_list': []}
 
     for group in groups:
         con = {
-            "group_name": group["group_name"]
+            "id": group.id,
+            "name": group.group_name
         }
         context["group_list"].append(con)
 

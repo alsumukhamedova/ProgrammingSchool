@@ -31,86 +31,88 @@ function proceed(code) {
 
 function login() {
     $.ajax({
-       url: "/login-user",
-       type: "GET",
-       headers: {
-           "user-login": document.querySelector("body > main > section > div.logIn__email > input").value,
-           "user-password": document.querySelector("body > main > section > div.form-group > input").value,
-       },
-       success: function() {
-           let type = getCookie("type");
-           let tasks = '/tasks';
-           if (type === "teacher") {
-               tasks = "teacher" + tasks
-           }
-           window.location.href=tasks
-       },
-       error: function() {
-           document.getElementById('incorrectPassword').style.visibility = 'visible';
-       }
+        url: "/login-user",
+        type: "GET",
+        headers: {
+            "user-login": document.querySelector("body > main > section > div.logIn__email > input").value,
+            "user-password": document.querySelector("body > main > section > div.form-group > input").value,
+        },
+        success: function () {
+            let type = getCookie("type");
+            let tasks = '/tasks';
+            if (type === "teacher") {
+                tasks = "teacher" + tasks
+            }
+            window.location.href = tasks
+        },
+        error: function () {
+            document.getElementById('incorrectPassword').style.visibility = 'visible';
+        }
     });
 }
 
 function register() {
     $.ajax({
-       url: "/sign-up/",
-       type: "POST",
-       data: {
-           "user_name": document.querySelector("body > main > section > div:nth-child(2) > input").value,
-           "user_login": document.querySelector("body > main > section > div:nth-child(3) > input").value,
-           "user_mail": document.querySelector("body > main > section > div:nth-child(4) > input").value,
-           "user_password": document.querySelector("body > main > section > div:nth-child(5) > input").value,
-           "user_type": document.querySelector("body > main > section > div:nth-child(6) > select").value,
-           "group_name": document.querySelector("body > main > section > div:nth-child(7) > select").value,
-       },
-       success: function() {
-           window.location.href='/login'
-       },
-       error: function() {
-           alert("Произошла какая-то ошибка сервера ;(")
-       }
+        url: "/sign-up/",
+        type: "POST",
+        data: {
+            "user_name": document.querySelector("body > main > section > div:nth-child(2) > input").value,
+            "user_login": document.querySelector("body > main > section > div:nth-child(3) > input").value,
+            "user_mail": document.querySelector("body > main > section > div:nth-child(4) > input").value,
+            "user_password": document.querySelector("body > main > section > div:nth-child(5) > input").value,
+            "user_type": document.querySelector("body > main > section > div:nth-child(6) > select").value,
+            "group_name": document.querySelector("body > main > section > div:nth-child(7) > select").value,
+        },
+        success: function () {
+            window.location.href = '/login'
+        },
+        error: function () {
+            alert("Произошла какая-то ошибка сервера ;(")
+        }
     });
 }
 
 function post_solution() {
     const editor = ace.edit("editor");
     $.ajax('/request/check/',
-    {
-      type: 'POST',
-      data: {
-          user_id : "123",
-          task_id : window.location.pathname.split('/')[window.location.pathname.split('/').length - 1],
-          program_language : editor.getSession().getMode().$id,
-          testing_stage : "1",
-          code: editor.getValue(),
-      },
-      success: function (data,status,xhr) {   // success callback function
-         alert('Success ' + data.message);
-         var ooa = data;
-      },
-      error: function (jqXhr, textStatus, errorMessage) { // error callback
-        alert('Возникла непредвиденная ошибка. Пожалуйста, попробуйте позднее.');
-      }
-    });
-  // setTimeout(5000)
+        {
+            type: 'POST',
+            data: {
+                user_id: "123",
+                task_id: window.location.pathname.split('/')[window.location.pathname.split('/').length - 1],
+                program_language: editor.getSession().getMode().$id,
+                testing_stage: "1",
+                code: editor.getValue(),
+            },
+            success: function (data, status, xhr) {   // success callback function
+                alert('Success ' + data.message);
+                var ooa = data;
+            },
+            error: function (jqXhr, textStatus, errorMessage) { // error callback
+                alert('Возникла непредвиденная ошибка. Пожалуйста, попробуйте позднее.');
+            }
+        });
+    // setTimeout(5000)
 
 }
+
 function tryGetCheckResult() {
-  $.ajax('/request/check/',
-    {
-      headers: {
-          user_id : getCookie("id"),
-          task_id : window.location.pathname.split('/')[window.location.pathname.split('/').length - 1],
-      },
-      success: function (data,status,xhr) {   // success callback function
-         alert('Вы успешно решили задачу!');
-      },
-      error: function (jqXhr, textStatus, errorMessage) { // error callback
-          console.log('Error: ' + errorMessage);
-          setTimeout(tryGetCheckResult, 5000);
-      }
-    });
+    $.ajax('/request/check/',
+        {
+            headers: {
+                user_id: getCookie("id"),
+                task_id: window.location.pathname.split('/')[window.location.pathname.split('/').length - 1],
+            },
+            success: function (data, status, xhr) {   // success callback function
+                alert('Вы успешно решили задачу!');
+            },
+            error: function (jqXhr, textStatus, errorMessage) { // error callback
+                console.log('Error: ' + errorMessage);
+                setTimeout(tryGetCheckResult, 5000);
+            }
+        });
 }
+
 // const popupClose = popup.querySelector('.popup__close');
 // const addButton = document.querySelector('.addButton');
 // const placeForm = document.forms.elementInfo;
@@ -121,10 +123,12 @@ function openPopup() {
     const popup = document.querySelector('.popup');
     popup.classList.add('popup_opened');
 }
+
 function closePopup() {
     const popup = document.querySelector('.popup');
     popup.classList.remove('popup_opened');
 }
+
 // // function createCard(cardData) {
 // //     const cardTemplate = document.querySelector('.tasksContainer').content;
 // //     const cardElement = cardTemplate.cloneNode(true);
@@ -132,10 +136,25 @@ function closePopup() {
 // //     return cardElement;
 // // }
 //
-// // function renderCard(name) {
-// //     const cardData = {'name': name};
-// //     cardsContainer.prepend(createCard(cardData));
-// // }
+function renderGroup() {
+    $.ajax('add-group',
+        {
+            type: 'POST',
+            data: {
+                group_name: document.querySelector('.popup__input').value,
+            },
+            success: function (data, status, xhr) {   // success callback function
+                alert('Группа добавлена');
+                setTimeout(function () {
+                    location.reload();
+                }, 2000)
+            },
+            error: function (jqXhr, textStatus, errorMessage) { // error callback
+                alert('Возникла непредвиденная ошибка. Пожалуйста, попробуйте позднее.');
+            }
+        });
+}
+
 //
 // addButton.addEventListener('click', function () {
 //     openPopup(popup);
