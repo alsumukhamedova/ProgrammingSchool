@@ -189,25 +189,28 @@ def teacher_tasks(request):
     отрисовывает все задания с профиля преподавателя в формате {id: int, name: str}
     """
     teacher_id = request.COOKIES.get("id")
-    groups = StudentGroupInfo.objects.filter(teacher_id=teacher_id).values("id")
+    groups = StudentGroupInfo.objects.filter(teacher_id=teacher_id).values("id", "group_name")
 
     tasks_info = Tasks.objects.values("id", "task_name")
     tasks_marked = MarkedTasks.objects.values("group_id", "task_id")
-    m_tasks = {}
-    tasks_con = {}
+    tasks_m = {}
+    tasks_i = {}
     for it in tasks_info:
-        tasks_con[it["id"]] = it["task_name"]
+        tasks_i[it["id"]] = it["task_name"]
 
     for it in tasks_marked:
-        m_tasks[it["group_id"]] = it["task_id"]
+        tasks_m[it["group_id"]] = it["task_id"]
 
     context = {"tasks": []}
 
     for group in groups:
         c = {}
-        task_id = m_tasks[group]
-        c[m_tasks[group]] = tasks_con[task_id]
-        context["tasks"].append(c)
+        if group["id"] in tasks_m.keys():
+            task_id = tasks_m[group["id"]]
+            c[group["group_name"]] = tasks_i[task_id]
+            context["tasks"].append(c)
+
+    print(context["tasks"])
 
     return render(request, 'teacherTasks.html', context)
 
