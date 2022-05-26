@@ -41,7 +41,7 @@ function login() {
             let type = getCookie("type");
             let tasks = '/tasks';
             if (type === "teacher") {
-                tasks = "teacher" + tasks
+                tasks = "/teacher" + tasks
             }
             window.location.href = tasks
         },
@@ -113,12 +113,6 @@ function tryGetCheckResult() {
         });
 }
 
-// const popupClose = popup.querySelector('.popup__close');
-// const addButton = document.querySelector('.addButton');
-// const placeForm = document.forms.elementInfo;
-// const cardsContainer = document.querySelector('.tasksContainer');
-// const group = document.querySelector('.group');
-//
 function openPopup() {
     const popup = document.querySelector('.popup');
     popup.classList.add('popup_opened');
@@ -129,13 +123,6 @@ function closePopup() {
     popup.classList.remove('popup_opened');
 }
 
-// // function createCard(cardData) {
-// //     const cardTemplate = document.querySelector('.tasksContainer').content;
-// //     const cardElement = cardTemplate.cloneNode(true);
-// //     cardElement.querySelector('.element__name').textContent = cardData.name;
-// //     return cardElement;
-// // }
-//
 function renderGroup() {
     $.ajax('add-group',
         {
@@ -154,19 +141,3 @@ function renderGroup() {
             }
         });
 }
-
-//
-// addButton.addEventListener('click', function () {
-//     openPopup(popup);
-// });
-// // popupClose.addEventListener('click', function () {
-// //     closePopup(popup);
-// // });
-// // placeForm.addEventListener('submit', function (evt) {
-// //     evt.preventDefault();
-// //     renderCard(name.value);
-// //     closePopup(popup);
-// //     placeForm.reset();
-// // })
-// addButton.addEventListener('click', openPopup);
-// popupClose.addEventListener('click', closePopup);
