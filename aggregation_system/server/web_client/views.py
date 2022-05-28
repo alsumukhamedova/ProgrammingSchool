@@ -163,21 +163,30 @@ def students_by_group(request, group_id):
     # except Tasks.DoesNotExist:
     #     raise Http404("Task does not exist")
     group = StudentGroupInfo.objects.get(id=group_id)
+    group_st = GroupComposition.objects.filter(group_id=group_id).values("student_id")
 
-    person_list = [
-        {'name': 'Литвинов Вячевлав', 'score': 0},
-        {'name': 'Никоненко Андрей роцкер', 'score': 666},
-        {'name': 'Демидов Иван', 'score': 220},
-        {'name': 'Бурмистров Владимир', 'score': 5000},
-        {'name': 'Мухамедова Алсу', 'score': 404},
-        {'name': 'Мухамедова Алсу', 'score': 404},
-        {'name': 'Литвинов Вячевлав', 'score': 0},
-        {'name': 'Никоненко Андрей роцкер', 'score': 666},
-        {'name': 'Демидов Иван', 'score': 220},
-        {'name': 'Бурмистров Владимир', 'score': 5000},
-        {'name': 'Мухамедова Алсу', 'score': 404},
-        {'name': 'Мухамедова Алсу', 'score': 404},
-    ]
+
+    person_list = []
+        # {'name': 'Литвинов Вячевлав', 'score': 0},
+        # {'name': 'Никоненко Андрей роцкер', 'score': 666},
+        # {'name': 'Демидов Иван', 'score': 220},
+        # {'name': 'Бурмистров Владимир', 'score': 5000},
+        # {'name': 'Мухамедова Алсу', 'score': 404},
+        # {'name': 'Мухамедова Алсу', 'score': 404},
+        # {'name': 'Литвинов Вячевлав', 'score': 0},
+        # {'name': 'Никоненко Андрей роцкер', 'score': 666},
+        # {'name': 'Демидов Иван', 'score': 220},
+        # {'name': 'Бурмистров Владимир', 'score': 5000},
+        # {'name': 'Мухамедова Алсу', 'score': 404},
+        # {'name': 'Мухамедова Алсу', 'score': 404},
+    # ]
+
+    for gr in group_st:
+        user = get_object_or_404(Users, id=gr["student_id"])
+        c = {
+            "name": user.user_name
+        }
+        person_list.append(c)
     return render(request, 'groupStatistic.html', {
         'disable_task_descr': True,  # оставить True, не трогать
         'task': {'name': group.group_name},  # оставить название "task", менять name
