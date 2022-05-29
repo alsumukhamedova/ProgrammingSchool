@@ -217,8 +217,7 @@ def teacher_tasks(request):
         c = {}
         if group["id"] in tasks_m.keys():
             task_id = tasks_m[group["id"]]
-            c[group["group_name"]] = tasks_i[task_id]
-            context["tasks"].append(c)
+            context["tasks"].append({"id": task_id, "name": tasks_i[task_id]})
 
     print(context["tasks"])
 
@@ -231,8 +230,8 @@ def teacher_task(request, task_id):
     :param task_id: id задачи из бд
     :return: описание задачи
     """
-    tasks_info = Tasks.objects.filter(id=task_id)
-    context = {'description': tasks_info}
+    tasks_info = Tasks.objects.get(id=task_id)
+    context = {'description': tasks_info.task_description, 'name': tasks_info.task_name}
     return render(request, 'teacherTaskDescription.html', context)
 
 

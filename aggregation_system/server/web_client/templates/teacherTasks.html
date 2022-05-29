@@ -41,7 +41,7 @@
 <section class="col-8 container">
     <h1 class="text-blue mt-lg-5">Задачи</h1>
     <div class="d-flex flex-column tasksContainer justify-content-center">
-        <div class="row align-items-center" id="taskNames">
+        <div id="taskNames">
             {% for task in tasks %}
                 <div class="d-flex flex-row justify-content-between">
                     <a href="{{ task.id }}" class="item-text"><u>{{ task.name }}</u></a>

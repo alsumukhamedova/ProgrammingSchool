@@ -482,7 +482,7 @@ section {
 }
 
 @media screen and (max-width: 550px) {
-    .popup__form{
+    .popup__form {
         width: 238px;
     }
 }
@@ -498,6 +498,7 @@ section {
     transition: all .5s;
     cursor: pointer;
 }
+
 .popup__input:focus {
     outline: none;
 }
@@ -508,15 +509,15 @@ section {
     }
 }
 
-.popup__input:nth-child(2){
-    margin-bottom:0;
+.popup__input:nth-child(2) {
+    margin-bottom: 0;
 }
 
 .popup__input::placeholder {
     font-size: 14px;
     font-family: inherit;
     line-height: 17px;
-    color: rgba(0,0,0,0.2);
+    color: rgba(0, 0, 0, 0.2);
 }
 
 .popup__button {
@@ -551,6 +552,16 @@ section {
         margin-top: 9px;
     }
 }
+
 .popup_opened {
     visibility: visible;
+}
+
+.button_text {
+    text-decoration: none;
+    color: white;
+}
+.button_text:hover{
+    color: white;
+    text-decoration: underline;
 }
