@@ -200,11 +200,12 @@ def teacher_tasks(request):
     отрисовывает все задания в формате {id: int, name: str}
     """
 
-    tasks_all = Tasks.objects.values("task_name", "difficulty_level")
+    tasks_all = Tasks.objects.values("id", "task_name", "difficulty_level")
     context = {"tasks": []}
     for it in tasks_all:
         diff_lvl = get_object_or_404(Marks, id=it["difficulty_level"])
         context["tasks"].append({
+            "id": it["id"],
             "name": it["task_name"],
             "difficulty_level": diff_lvl.mark_description
         })
