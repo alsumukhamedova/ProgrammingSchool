@@ -72,6 +72,27 @@ function register() {
     });
 }
 
+function reset_password() {
+    $.ajax({
+        url: "//",
+        type: "POST",
+        data: {
+            "user_id": getCookie('id'),
+            "user_name": document.querySelector("body > section > div > form > div:nth-child(1) > input").value,
+            "user_mail": document.querySelector("body > section > div > form > div:nth-child(2) > input").value,
+            "user_password": document.querySelector("body > section > div > form > div:nth-child(3) > input").value,
+        },
+        success: function () {
+            setTimeout(function () {
+                    location.reload();
+                }, 500)
+        },
+        error: function () {
+            alert("Произошла какая-то ошибка сервера ;(")
+        }
+    });
+}
+
 function post_solution() {
     const editor = ace.edit("editor");
     $.ajax('/request/check/',
