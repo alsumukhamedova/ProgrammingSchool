@@ -43,9 +43,11 @@ def reset_password(request):
 
 
 def profile_edit(request):
-    # if student, render studentProfileEdit.html
-    # if teacher, render teacherProfielEdit.html
-    return render(request, 'studentProfileEdit.html', {'full_name': request.COOKIES.get("name")})
+    return render(
+        request,
+        'teacherProfielEdit.html' if (request.COOKIES.get("type") == 'teacher') else 'studentProfileEdit.html',
+        {'full_name': request.COOKIES.get("name")}
+    )
 
 
 def tasks(request):
@@ -165,20 +167,19 @@ def students_by_group(request, group_id):
     group = StudentGroupInfo.objects.get(id=group_id)
     group_st = GroupComposition.objects.filter(group_id=group_id).values("student_id")
 
-
     person_list = []
-        # {'name': 'Литвинов Вячевлав', 'score': 0},
-        # {'name': 'Никоненко Андрей роцкер', 'score': 666},
-        # {'name': 'Демидов Иван', 'score': 220},
-        # {'name': 'Бурмистров Владимир', 'score': 5000},
-        # {'name': 'Мухамедова Алсу', 'score': 404},
-        # {'name': 'Мухамедова Алсу', 'score': 404},
-        # {'name': 'Литвинов Вячевлав', 'score': 0},
-        # {'name': 'Никоненко Андрей роцкер', 'score': 666},
-        # {'name': 'Демидов Иван', 'score': 220},
-        # {'name': 'Бурмистров Владимир', 'score': 5000},
-        # {'name': 'Мухамедова Алсу', 'score': 404},
-        # {'name': 'Мухамедова Алсу', 'score': 404},
+    # {'name': 'Литвинов Вячевлав', 'score': 0},
+    # {'name': 'Никоненко Андрей роцкер', 'score': 666},
+    # {'name': 'Демидов Иван', 'score': 220},
+    # {'name': 'Бурмистров Владимир', 'score': 5000},
+    # {'name': 'Мухамедова Алсу', 'score': 404},
+    # {'name': 'Мухамедова Алсу', 'score': 404},
+    # {'name': 'Литвинов Вячевлав', 'score': 0},
+    # {'name': 'Никоненко Андрей роцкер', 'score': 666},
+    # {'name': 'Демидов Иван', 'score': 220},
+    # {'name': 'Бурмистров Владимир', 'score': 5000},
+    # {'name': 'Мухамедова Алсу', 'score': 404},
+    # {'name': 'Мухамедова Алсу', 'score': 404},
     # ]
 
     for gr in group_st:
