@@ -5,7 +5,7 @@ from django.urls import path
 from .views import (index, send_result, check_send, tasks, task,
                     teacher_groups, teacher_tasks, teacher_task,
                     login, register, reset_password, profile_edit,
-                    sign_up, login_user, students_by_group, teacher_groups_add)
+                    sign_up, login_user, students_by_group, teacher_groups_add, add_task_group)
 
 """Links in web_client app"""
 
@@ -31,5 +31,6 @@ urlpatterns = [
                   path('teacher/groups/<int:group_id>', students_by_group, name='students_by_group'),
                   path('teacher/tasks/', teacher_tasks, name='teacher_tasks'),
                   path('teacher/tasks/<int:task_id>', teacher_task, name='teacher_task'),
-                  path('teacher/add-group', teacher_groups_add, name='teacher_groups_add_get'),
+                  path('teacher/add-group', teacher_groups_add, name='teacher_groups_add'),
+                  path('teacher/add-task', add_task_group, name='add_task_group'),
               ] + static('templates')

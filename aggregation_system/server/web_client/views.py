@@ -196,30 +196,17 @@ def students_by_group(request, group_id):
 
 def teacher_tasks(request):
     """
-    отрисовывает все задания с профиля преподавателя в формате {id: int, name: str}
+    отрисовывает все задания в формате {id: int, name: str}
     """
-    teacher_id = request.COOKIES.get("id")
-    groups = StudentGroupInfo.objects.filter(teacher_id=teacher_id).values("id", "group_name")
 
-    tasks_info = Tasks.objects.values("id", "task_name")
-    tasks_marked = MarkedTasks.objects.values("group_id", "task_id")
-    tasks_m = {}
-    tasks_i = {}
-    for it in tasks_info:
-        tasks_i[it["id"]] = it["task_name"]
-
-    for it in tasks_marked:
-        tasks_m[it["group_id"]] = it["task_id"]
-
+    tasks_all = Tasks.objects.values("task_name", "difficulty_level")
     context = {"tasks": []}
-
-    for group in groups:
-        c = {}
-        if group["id"] in tasks_m.keys():
-            task_id = tasks_m[group["id"]]
-            context["tasks"].append({"id": task_id, "name": tasks_i[task_id]})
-
-    print(context["tasks"])
+    for it in tasks_all:
+        diff_lvl = get_object_or_404(Marks, id=it["difficulty_level"])
+        context["tasks"].append({
+            "name": it["task_name"],
+            "difficulty_level": diff_lvl.mark_description
+        })
 
     return render(request, 'teacherTasks.html', context)
 
@@ -413,3 +400,18 @@ def teacher_groups_add(request):
     return Response({"message": "Got some data!"})
 
 
+@api_view(['POST'])
+def add_task_group(request):
+    """
+        POST:
+            Args:
+                group_id - group's id
+                task_id - task's id
+            Returns:
+                    Error or message - 'Got some data!'
+    """
+    data = request.data
+    marked_tasks = MarkedTasks(group_id=get_object_or_404(StudentGroupInfo, id=data["group_id"]),
+                               task_id=get_object_or_404(Tasks, id=data["task_id"]))
+    marked_tasks.save()
+    return Response({"message": "Got some data!"})

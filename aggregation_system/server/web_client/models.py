@@ -114,5 +114,5 @@ class GroupComposition(models.Model):
 class MarkedTasks(models.Model):
     group_id = models.ForeignKey(StudentGroupInfo, on_delete=models.CASCADE)
     task_id = models.ForeignKey(Tasks, on_delete=models.CASCADE)
-    task_assigment_time = models.IntegerField()
-    time_solve_task = models.IntegerField()
+    task_assigment_time = models.IntegerField(default=1)
+    time_solve_task = models.IntegerField(default=1)
