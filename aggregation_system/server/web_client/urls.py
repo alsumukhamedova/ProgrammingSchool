@@ -5,7 +5,8 @@ from django.urls import path
 from .views import (index, send_result, check_send, tasks, task,
                     teacher_groups, teacher_tasks, teacher_task,
                     login, register, reset_password, profile_edit,
-                    sign_up, login_user, students_by_group, teacher_groups_add, add_task_group)
+                    sign_up, login_user, students_by_group, teacher_groups_add,
+                    add_task_group, change_info_user)
 
 """Links in web_client app"""
 
@@ -13,6 +14,7 @@ urlpatterns = [
                   path('', index),
                   path('sign-up/', sign_up),
                   path('login-user/', login_user),
+                  path('change-info/', change_info_user),
 
                   path('login/', login),
                   path('register/', register),
