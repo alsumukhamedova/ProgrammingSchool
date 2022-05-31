@@ -93,6 +93,7 @@ def task(request, task_id):
     it = Tasks.objects.filter(id=task_id).values()[0]
     dif_lvl = Marks.objects.filter(id=it["difficulty_level_id"]).values("mark_description")[0]
     user_id = request.COOKIES.get("id")
+    results = CompleteTask.objects.filter(user_id=user_id, task_id=task_id).values()
     try:
         code = CheckSend.objects.filter(user_id=user_id, task_id_id=task_id).values("code")[0]["code"]
     except IndexError:
@@ -106,7 +107,12 @@ def task(request, task_id):
         "time_to_solve": it["time_to_solve"],
         "resource_load": it["resource_load"],
         "difficulty_level": dif_lvl["mark_description"],
-        "last_solution": code
+        "last_solution": code,
+        "results": [{
+            "status": result["status"],
+            "time": result["time"],
+            "size": result["size"]
+        } for result in results]
     }
 
     return render(request, 'studentTaskDescription.html',
@@ -305,16 +311,16 @@ def send_result(request):
          task_id - personal task id like in database
          program_language - name of program language to test code
     """
-    # data = request.headers
-    # user_id = request.COOKIES.get("id")
-    # results = CompleteTask.objects.filter(user_id=user_id).filter(task_id=data["task-id"]).values()
-    # context = {"results": []}
-    # for result in results:
-    #     context["results"].append({
-    #         "status": result["status"],
-    #         "time": result["time"],
-    #         "size": result["size"]
-    #     })
+    data = request.headers
+    user_id = request.COOKIES.get("id")
+    results = CompleteTask.objects.filter(user_id=user_id).filter(task_id=data["task-id"]).values()
+    context = {"results": []}
+    for result in results:
+        context["results"].append({
+            "status": result["status"],
+            "time": result["time"],
+            "size": result["size"]
+        })
 
     data = request.headers
     user_id = request.COOKIES.get("id")
