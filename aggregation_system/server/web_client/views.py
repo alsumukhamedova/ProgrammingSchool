@@ -305,6 +305,17 @@ def send_result(request):
          task_id - personal task id like in database
          program_language - name of program language to test code
     """
+    # data = request.headers
+    # user_id = request.COOKIES.get("id")
+    # results = CompleteTask.objects.filter(user_id=user_id).filter(task_id=data["task-id"]).values()
+    # context = {"results": []}
+    # for result in results:
+    #     context["results"].append({
+    #         "status": result["status"],
+    #         "time": result["time"],
+    #         "size": result["size"]
+    #     })
+
     data = request.headers
     user_id = request.COOKIES.get("id")
     results = CompleteTask.objects.filter(user_id=user_id).filter(task_id=data["task-id"])
