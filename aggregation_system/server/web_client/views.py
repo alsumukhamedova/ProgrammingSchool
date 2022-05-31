@@ -427,14 +427,12 @@ def change_info_user(request):
                 user_id - user's id (from cookie)
                 user_name - user's name
                 user_mail - user's mail
-                user_password - user's password
             Returns:
                     Error or message - 'Got some data!'
     """
 
     user_id = request.COOKIES.get("id")
     data = request.data
-    user = Users.objects.filter(id=user_id).update(user_name=data["user_name"], user_mail=data["user_mail"],
-                                                        user_password=data["user_password"])
+    user = Users.objects.filter(id=user_id).update(user_name=data["user_name"], user_mail=data["user_mail"])
 
     return Response({"message": "Got some data!"})
