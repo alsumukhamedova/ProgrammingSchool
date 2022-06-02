@@ -145,11 +145,12 @@ function closePopup() {
 }
 
 function renderGroup() {
-    $.ajax('/add-group',
+    $.ajax('/teacher/add-task',
         {
             type: 'POST',
             data: {
-                group_name: document.querySelector('.popup__input').value,
+                group_id: document.querySelector("body > section.parts.d-flex.justify-content-start > div.popup.popup_opened > div > form > select").value,
+                task_id: window.location.pathname.split('/')[window.location.pathname.split('/').length - 1],
             },
             success: function (data, status, xhr) {   // success callback function
                 alert('Группа добавлена');
