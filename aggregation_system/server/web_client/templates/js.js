@@ -145,7 +145,7 @@ function closePopup() {
 }
 
 function renderGroup() {
-    $.ajax('add-group',
+    $.ajax('/add-group',
         {
             type: 'POST',
             data: {

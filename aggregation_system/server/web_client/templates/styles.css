@@ -324,6 +324,12 @@ section {
     margin: 50px;
     max-width: 50%;
 }
+.addTaskGroup{
+    display: flex;
+    justify-content: end;
+    margin: 50px;
+    max-width: 50%;
+}
 
 .saveSolutionButton {
     margin: 5px;

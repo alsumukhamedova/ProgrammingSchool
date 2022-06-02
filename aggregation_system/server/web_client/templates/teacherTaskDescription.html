@@ -45,27 +45,27 @@
     </div>
 </header>
 <section class="col-10 container">
-    <div class="row">
+    <div class="row  d-flex justify-content-between">
         <h1 class="text-center col-4 text-blue mt-lg-5 mt-sm-3 mb-lg-2 mb-sm-0">{{ name }}</h1>
         <div class="addGroup">
             <button type="submit" class="btn shadow text-white green saveProfileButton rounded-pill addButton mt-1 mb-2"
                     onclick="return openPopup()">Добавить группу
             </button>
-            <button type="submit" class="btn shadow text-white green saveProfileButton rounded-pill addGroup mt-1 mb-2"
-                    style="display: flex; align-items: center; justify-content: center;">
-                <a href="/statistics/{{ task_id }}" class="button_text">Статистика</a>
-            </button>
+            {#            <button type="submit" class="btn shadow text-white green saveProfileButton rounded-pill addGroup mt-1 mb-2"#}
+            {#                    style="display: flex; align-items: center; justify-content: center;">#}
+            {#                <a href="/statistics/{{ task_id }}" class="button_text">Статистика</a>#}
+            {#            </button>#}
         </div>
     </div>
 </section>
 <section class="parts d-flex justify-content-start" style="margin-left: 15%">
-    <div class="col-4">
+    <div class="col-5">
         <div class="row h-100 parts taskDescription">
             <p>{{ description }}</p>
         </div>
     </div>
-    <div class="col-4">
-        <div class="row h-100 parts taskDescription" style="margin-left: 15%">
+    <div class="col-5">
+        <div class="row h-100 parts taskDescription" style="margin-left: 5%">
             <p>{{ group_name }}</p>
         </div>
     </div>
@@ -75,7 +75,11 @@
                     src="{% static './images/CloseIconImage.svg' %}"></button>
             <h3 class="popup__title">Добавить группу</h3>
             <form class="popup__form form" action="#" method="POST" name="elementInfo">
-                <input type="text" name="group" placeholder="Название группы" class="popup__input">
+                <select type="select" name="group" class="popup__input">
+                    {% for group_name in all_groups %}
+                        <option>{{ group_name }}</option>
+                    {% endfor %}
+                </select>
                 <button type="submit" class="popup__button btn shadow saveProfileButton rounded-pill"
                         onclick="renderGroup()">Добавить
                 </button>
