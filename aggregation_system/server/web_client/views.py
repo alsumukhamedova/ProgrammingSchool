@@ -225,8 +225,21 @@ def teacher_task(request, task_id):
     :param task_id: id задачи из бд
     :return: описание задачи
     """
+    teacher_id = request.COOKIES.get("id")
     tasks_info = Tasks.objects.get(id=task_id)
-    context = {'description': tasks_info.task_description, 'name': tasks_info.task_name}
+    groups = StudentGroupInfo.objects.filter(teacher_id=teacher_id)
+    context = {
+        'description': tasks_info.task_description,
+        'name': tasks_info.task_name,
+        "all_groups": [{
+            "name": group['group_name'],
+            "id": group['id']
+        } for group in groups.values()],
+        "marked_groups": [{
+            "name": group['group_name'],
+            "id": group['id']
+        } for group in groups.filter(markedtasks__task_id__exact=task_id, teacher_id=teacher_id).values()]
+    }
     return render(request, 'teacherTaskDescription.html', context)
 
 
