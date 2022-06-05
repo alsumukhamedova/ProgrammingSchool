@@ -139,7 +139,7 @@ function tryGetCheckResult() {
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback
                 console.log('Error: ' + errorMessage);
-                setTimeout(tryGetCheckResult, 5000);
+                setTimeout(tryGetCheckResult, 17000);
             }
         });
 }
