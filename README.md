@@ -4,29 +4,15 @@ Repository for aggregation system in python with use Django framework.
 
 # Configure system
 
-In project we use dependency managment [Poetry](https://python-poetry.org/docs/)
+There is requirements.txt with all library versions in the project.
 
-Poetry provides an [installer](https://python-poetry.org/docs/#installation) that will
-install poetry isolated from the rest of your system by vendorizing its dependencies. This
-is the recommended way of installing poetry.
-
-Miniconda venv is been used in project. To install they download from
-[site](https://docs.conda.io/en/latest/miniconda.html) miniconda Python version 3.8 to
-your system (Linux/Windows)
+Virtualenv environment is been used in project.
 
 ## Create env:
 
-To stop `poetry` from creating new virtualenvs run
-`poetry config virtualenvs.create false` (because we use `conda`, so poetry will use
-currently activated environment instead of creating its own).
-
-Next step create env: `conda env create -f environment.yml`
-
-Install dependecies: `poetry install`
-
-Configure pre-commit hooks: `pre-commit install`
-
-TODO: create docker image to use they in gitlab-ci and run test
+You shoule use the command for creating environment:
+source venv/bin/activate 
+Next step: pip install -r <file_name>
 
 # Work pipeline:
 
