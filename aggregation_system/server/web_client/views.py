@@ -84,6 +84,7 @@ def tasks(request):
                 "id": it["id"],
                 "name": it["task_name"],
                 "checked": 'checked' if CompleteTask.objects.filter(task_id__exact=it["id"],
+                                                                    user_id=student_id,
                                                                     status='OK').first() is not None else '',
                 "color": id_to_color(it["difficulty_level_id"])
             }
@@ -441,6 +442,6 @@ def change_info_user(request):
 
     user_id = request.COOKIES.get("id")
     data = request.data
-    user = Users.objects.filter(id=user_id).update(user_name=data["user_name"], user_mail=data["user_mail"])
+    Users.objects.filter(id=user_id).update(user_name=data["user_name"], user_mail=data["user_mail"])
 
     return Response({"message": "Got some data!"})
