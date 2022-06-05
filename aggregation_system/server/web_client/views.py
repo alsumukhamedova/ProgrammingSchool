@@ -53,10 +53,12 @@ def reset_password(request):
 
 
 def profile_edit(request):
+    user = Users.objects.get(id = request.COOKIES.get("id") )
     return render(
         request,
         'teacherProfielEdit.html' if (request.COOKIES.get("type") == 'teacher') else 'studentProfileEdit.html',
-        {'full_name': request.COOKIES.get("name")}
+        {'full_name': user.user_name,
+         'mail': user.user_mail}
     )
 
 

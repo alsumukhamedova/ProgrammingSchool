@@ -85,13 +85,12 @@ function group_change_by_type() {
 
 function reset_password() {
     $.ajax({
-        url: "//",
+        url: "/change-info/",
         type: "POST",
         data: {
             "user_id": getCookie('id'),
             "user_name": document.querySelector("body > section > div > form > div:nth-child(1) > input").value,
             "user_mail": document.querySelector("body > section > div > form > div:nth-child(2) > input").value,
-            "user_password": document.querySelector("body > section > div > form > div:nth-child(3) > input").value,
         },
         success: function () {
             setTimeout(function () {
