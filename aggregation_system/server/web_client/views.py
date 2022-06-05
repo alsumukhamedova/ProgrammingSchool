@@ -83,13 +83,21 @@ def task(request, task_id):
         :param task_id: id задания из бд
         :return: возвращает описание задания по task_id, последнее решение, runtime, memory
         """
-    # try:
-    #     p = Tasks.objects.get(pk=task_id)
-    # except Tasks.DoesNotExist:
-    #     raise Http404("Task does not exist")
 
-    # for it in context:
-    #     print(it["task_name"])
+    # it = Tasks.objects.values()
+    # context = {"tasks": []}
+    # for t in it:
+    #     context["tasks"].append({
+    #         "task_id": t["id"],
+    #         "task_name": t["task_name"],
+    #         "task_description": t["task_description"],
+    #         "test_data": t["test_data"],
+    #         "time_to_solve": t["time_to_solve"],
+    #         "resource_load": t["resource_load"],
+    #         "difficulty_level_id": get_object_or_404(Marks, id=t["difficulty_level_id"]).mark_description
+    #     })
+
+
     it = Tasks.objects.filter(id=task_id).values()[0]
     dif_lvl = Marks.objects.filter(id=it["difficulty_level_id"]).values("mark_description")[0]
     user_id = request.COOKIES.get("id")
@@ -174,19 +182,6 @@ def students_by_group(request, group_id):
     group_st = GroupComposition.objects.filter(group_id=group_id).values("student_id")
 
     person_list = []
-    # {'name': 'Литвинов Вячевлав', 'score': 0},
-    # {'name': 'Никоненко Андрей роцкер', 'score': 666},
-    # {'name': 'Демидов Иван', 'score': 220},
-    # {'name': 'Бурмистров Владимир', 'score': 5000},
-    # {'name': 'Мухамедова Алсу', 'score': 404},
-    # {'name': 'Мухамедова Алсу', 'score': 404},
-    # {'name': 'Литвинов Вячевлав', 'score': 0},
-    # {'name': 'Никоненко Андрей роцкер', 'score': 666},
-    # {'name': 'Демидов Иван', 'score': 220},
-    # {'name': 'Бурмистров Владимир', 'score': 5000},
-    # {'name': 'Мухамедова Алсу', 'score': 404},
-    # {'name': 'Мухамедова Алсу', 'score': 404},
-    # ]
 
     for gr in group_st:
         user = get_object_or_404(Users, id=gr["student_id"])
