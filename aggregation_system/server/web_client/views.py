@@ -139,45 +139,24 @@ def task(request, task_id):
                   context)
 
 
-def group_statistics(request, task_id):
+def group_statistics(request, task_id, group_id):
     """
     Отрисовывает список студентов с их баллами (с профиля преподавателя) по заданию task_id
+    :param group_id: id группы из бд
     :param task_id: id задания из бд
     :return: возвращает список студентов в формате {name: str, score: int}, а также название задания из бд
     """
-    # try:
-    #     p = Tasks.objects.get(pk=task_id)
-    # except Tasks.DoesNotExist:
-    #     raise Http404("Task does not exist")
+
     teacher_id = request.COOKIES.get("id")
-    groups = StudentGroupInfo.objects.filter(teacher=teacher_id).values("id")
+    group = StudentGroupInfo.objects.get(teacher=teacher_id, id=group_id)
+    task = Tasks.objects.get(id=task_id)
+    person_list = Users.objects.filter(completetask__task_id_id__exact=task_id, completetask__status__exact='OK').values("user_name").distinct()
 
-    users = {}
-    tasks_res = {}
-    user_group = {}
+    context = {'task': {'id': task.id, 'name': task.task_name},
+               'group': {'id': group.id, 'name': group.group_name},
+               'person_list': list(person_list)}
 
-    for it in Users.objects.values("id", "user_name"):
-        users[it["id"]] = it["user_name"]
-
-    for it in CompleteTask.objects.filter(task_id=task_id).values("user_id", "status"):
-        tasks_res[it["user_id"]] = it["status"]
-
-    for it in GroupComposition.objects.values("group_id", "student_id"):
-        user_group[it["group_id"]] = it["student_id"]
-
-    context = {'tasks': []}
-
-    for group in groups:
-        c = {
-            'name': users[user_group[group["id"]]],
-            'status': tasks_res[user_group[group["id"]]]
-        }
-        context["tasks"].append(c)
-
-    return render(request, 'groupStatistic.html', {
-        'task': {'id': task_id},
-        'person_list': context
-    })
+    return render(request, 'groupStatistic.html', context)
 
 
 def students_by_group(request, group_id):

@@ -15,11 +15,11 @@
         <div class="col-12>">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <ul class="nav col-12 col-lg-auto">
-                    <li><a href="../tasks" class="nav-link px-5 text-white fs-3"
+                    <li><a href="/teacher/tasks" class="nav-link px-5 text-white fs-3"
                            style="margin-left: 90px;"><u>Задачи</u></a></li>
                 </ul>
                 <ul class="nav col-12 col-lg-auto me-lg-auto">
-                    <li><a href="../groups" class="nav-link px-5 text-white fs-3"><u>Группы</u></a></li>
+                    <li><a href="/teacher/groups" class="nav-link px-5 text-white fs-3"><u>Группы</u></a></li>
                 </ul>
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
@@ -39,25 +39,19 @@
         </div>
     </div>
 </header>
-<section class="col-12 container">
-    <div class="row">
-        <h1 class="text-center col-xxl-4 text-blue mt-xxl-5">{{ task.name }}</h1>
+<section class="col-8 container">
+    <div class="d-flex justify-content-between flex-row">
+        <h1 class="text-blue mt-5">{{ group.name }}</h1>
+        <h2 class="text-blue mt-5">{{ task.name }}</h2>
         <h4 class="addGroup text-blue"
             style="visibility: {% if disable_task_descr %}hidden{% else %}visible{% endif %}"><a
                 href="/teacher/tasks/{{ task.id }}"><u>Описание задачи</u></a></h4>
-        {#        <div class="options row">#}
-        {#            <h5 class="text-blue w-25 d-flex justify-content-around">Баллы</h5>#}
-        {#        </div>#}
     </div>
     <div class="col-10 d-flex flex-column tasksContainer align-content-flex-start">
         <div class="" id="taskNames">
             {% for person in person_list %}
                 <div class="d-flex flex-row justify-content-between">
-                    {#        TODO here href        #}
-                    <a href="studentTaskDescription.html" class="item-text"><u>{{ person.name }}</u></a>
-                    {#                    <div class="transparentColor w-25 d-flex justify-content-around ">#}
-                    {#                        <p class="marked text-blue">{{ person.score }}</p>#}
-                    {#                    </div>#}
+                    <u class="item-text">{{ person.user_name }}</u>
                 </div>
             {% endfor %}
         </div>

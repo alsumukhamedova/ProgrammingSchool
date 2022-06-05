@@ -174,3 +174,22 @@ function renderGroup() {
             }
         });
 }
+
+function addNewGroup() {
+    $.ajax('/teacher/add-group',
+        {
+            type: 'POST',
+            data: {
+                group_name: document.querySelector("body > section > div.popup.popup_opened > div > form > input").value,
+            },
+            success: function (data, status, xhr) {   // success callback function
+                alert('Группа добавлена');
+                setTimeout(function () {
+                    location.reload();
+                }, 2000)
+            },
+            error: function (jqXhr, textStatus, errorMessage) { // error callback
+                alert('Возникла непредвиденная ошибка. Пожалуйста, попробуйте позднее.');
+            }
+        });
+}
