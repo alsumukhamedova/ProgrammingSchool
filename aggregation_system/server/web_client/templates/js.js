@@ -74,6 +74,16 @@ function register() {
     });
 }
 
+function group_change_by_type() {
+    const type = document.querySelector("body > main > section > div:nth-child(6) > select").value;
+    if (type === 'teacher') {
+        document.querySelector("body > main > section > div:nth-child(7) > select").style.visibility = 'hidden'
+    }
+    else {
+        document.querySelector("body > main > section > div:nth-child(7) > select").style.visibility = 'visible'
+    }
+}
+
 function reset_password() {
     $.ajax({
         url: "//",
