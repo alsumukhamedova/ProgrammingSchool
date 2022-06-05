@@ -6,7 +6,7 @@ from .views import (index, send_result, check_send, tasks, task,
                     teacher_groups, teacher_tasks, teacher_task,
                     login, register, reset_password, profile_edit,
                     sign_up, login_user, students_by_group, teacher_groups_add,
-                    add_task_group, change_info_user)
+                    add_task_group, change_info_user, all_tasks)
 
 """Links in web_client app"""
 
@@ -27,7 +27,8 @@ urlpatterns = [
                   path('profile_edit/', profile_edit),
                   path('tasks/', tasks, name='tasks'),
                   path('tasks/<int:task_id>', task, name='task'),
-                #   path('statistics/<int:task_id>', students_by_task, name='group_statistics'),
+                  path('tasks/all', all_tasks, name='all_tasks'),
+                  #   path('statistics/<int:task_id>', students_by_task, name='group_statistics'),
 
                   path('teacher/groups', teacher_groups, name='teacher_groups'),
                   path('teacher/groups/<int:group_id>', students_by_group, name='students_by_group'),

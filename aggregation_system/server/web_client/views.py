@@ -77,26 +77,24 @@ def tasks(request):
     return render(request, 'studentTasks.html', context)
 
 
+def all_tasks(request):
+    it = Tasks.objects.values()
+    context = {"tasks": []}
+    for t in it:
+        context["tasks"].append({
+            "id": t["id"],
+            "name": t["task_name"],
+            "difficulty_level_id": get_object_or_404(Marks, id=t["difficulty_level_id"]).mark_description
+        })
+    return render(request, 'studentAllTasks.html', context)
+
+
 def task(request, task_id):
     """
         Отрисовывает страницу одного задания по task_id + решение студента (last_solution) + результат (runtime и memory)
         :param task_id: id задания из бд
         :return: возвращает описание задания по task_id, последнее решение, runtime, memory
         """
-
-    # it = Tasks.objects.values()
-    # context = {"tasks": []}
-    # for t in it:
-    #     context["tasks"].append({
-    #         "task_id": t["id"],
-    #         "task_name": t["task_name"],
-    #         "task_description": t["task_description"],
-    #         "test_data": t["test_data"],
-    #         "time_to_solve": t["time_to_solve"],
-    #         "resource_load": t["resource_load"],
-    #         "difficulty_level_id": get_object_or_404(Marks, id=t["difficulty_level_id"]).mark_description
-    #     })
-
 
     it = Tasks.objects.filter(id=task_id).values()[0]
     dif_lvl = Marks.objects.filter(id=it["difficulty_level_id"]).values("mark_description")[0]
