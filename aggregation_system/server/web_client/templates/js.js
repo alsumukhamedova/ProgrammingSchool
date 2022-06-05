@@ -136,6 +136,9 @@ function tryGetCheckResult() {
             },
             success: function (data, status, xhr) {   // success callback function
                 alert('Вы успешно решили задачу!');
+                setTimeout(function () {
+                    location.reload();
+                }, 2000)
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback
                 console.log('Error: ' + errorMessage);
