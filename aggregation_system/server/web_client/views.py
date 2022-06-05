@@ -165,26 +165,14 @@ def students_by_group(request, group_id):
     :param group_id: id группы из бд
     :return: возвращает список студентов в формате {name: str, score: int}, а также название группы из бд
     """
-    # try: В ЭТОЙ ФУНКЦИИ НЕТ ТАСКС, ТОЛЬКО ГРУППЫ
-    #     p = Tasks.objects.get(pk=task_id)
-    # except Tasks.DoesNotExist:
-    #     raise Http404("Task does not exist")
-    group = StudentGroupInfo.objects.get(id=group_id)
-    group_st = GroupComposition.objects.filter(group_id=group_id).values("student_id")
+    teacher_id = request.COOKIES.get("id")
+    group = StudentGroupInfo.objects.get(teacher=teacher_id, id=group_id)
+    person_list = Users.objects.filter(groupcomposition__group_id__exact=group_id).values("user_name").distinct()
 
-    person_list = []
+    context = {'group': {'id': group.id, 'name': group.group_name},
+               'person_list': list(person_list)}
 
-    for gr in group_st:
-        user = get_object_or_404(Users, id=gr["student_id"])
-        c = {
-            "name": user.user_name
-        }
-        person_list.append(c)
-    return render(request, 'groupStatistic.html', {
-        'disable_task_descr': True,  # оставить True, не трогать
-        'task': {'name': group.group_name},  # оставить название "task", менять name
-        'person_list': person_list
-    })
+    return render(request, 'groupStatistic.html', context)
 
 
 def teacher_tasks(request):
