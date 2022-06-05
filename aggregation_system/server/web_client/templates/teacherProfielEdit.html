@@ -41,10 +41,10 @@
         <h2>{{ full_name }}</h2>
         <form class="form ">
             <div class="form-group">
-                <input type="text" class="form-control shadow rounded-pill profileForm" placeholder="*Фамилия и Имя">
+                <input type="text" class="form-control shadow rounded-pill profileForm" placeholder="*Фамилия и Имя" value="{{ full_name }}">
             </div>
             <div class="form-group">
-                <input type="email" class="form-control shadow rounded-pill profileForm" placeholder="*Email">
+                <input type="email" class="form-control shadow rounded-pill profileForm" placeholder="*Email" value="{{ mail }}">
             </div>
             <div class="d-flex">
                 <button type="submit" class="btn shadow text-white green saveProfileButton rounded-pill" onclick="reset_password()">Сохранить</button>
