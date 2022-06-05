@@ -175,6 +175,7 @@ function renderGroup() {
 }
 
 function addNewGroup() {
+    event.preventDefault();
     $.ajax('/teacher/add-group',
         {
             type: 'POST',
@@ -185,7 +186,7 @@ function addNewGroup() {
                 alert('Группа добавлена');
                 setTimeout(function () {
                     location.reload();
-                }, 2000)
+                }, 1000)
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback
                 alert('Возникла непредвиденная ошибка. Пожалуйста, попробуйте позднее.');
