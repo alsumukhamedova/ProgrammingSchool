@@ -48,9 +48,9 @@
         <div class="" id="taskNames">
             {% for task in tasks %}
             <div class="d-flex flex-row justify-content-between">
-                <a href="{{ task.id }}" class="item-text"><u>{{ task.name }}</u></a>
+                <a href="{{ task.id }}" class="item-text" style="color: {{ task.color }}"><u>{{ task.name }}</u></a>
                 <div class="transparentColor w-25 d-flex justify-content-around" style="margin-right: 10px;">
-                    <input type="checkbox" {{ task.checked }} disabled>
+                    <input class="checkBox" type="checkbox" {{ task.checked }} disabled>
                 </div>
             </div>
             {% endfor %}

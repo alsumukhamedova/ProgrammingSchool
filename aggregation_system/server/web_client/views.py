@@ -15,6 +15,16 @@ import asyncio
 FILE_DIR = '/home/gypsyjr-virtual/PycharmProjects/aggregation_system/aggregation_system/server/web_client/files/'
 
 
+def id_to_color(color_id):
+    if color_id == 1:
+        return "green"
+    elif color_id == 2:
+        return "yellow"
+    elif color_id == 3:
+        return "red"
+    return ''
+
+
 def index(request):
     return render(request, 'index.html')
 
@@ -59,7 +69,7 @@ def tasks(request):
     group = GroupComposition.objects.filter(student_id=student_id).values("group_id")[0]
 
     tasks_st = MarkedTasks.objects.filter(group_id=group["group_id"]).values("id", "task_id")
-    tasks_info = Tasks.objects.values("id", "task_name")
+    tasks_info = Tasks.objects.values("id", "task_name", "difficulty_level_id")
     context = {'tasks': []}
     tasks_con = {}
 
@@ -72,7 +82,8 @@ def tasks(request):
                 "id": it["id"],
                 "name": it["task_name"],
                 "checked": 'checked' if CompleteTask.objects.filter(task_id__exact=it["id"],
-                                                                    status='OK').first() is not None else ''
+                                                                    status='OK').first() is not None else '',
+                "color": id_to_color(it["difficulty_level_id"])
             }
             context["tasks"].append(c)
 
@@ -86,7 +97,8 @@ def all_tasks(request):
         context["tasks"].append({
             "id": t["id"],
             "name": t["task_name"],
-            "difficulty_level_id": get_object_or_404(Marks, id=t["difficulty_level_id"]).mark_description
+            "difficulty_level_id": get_object_or_404(Marks, id=t["difficulty_level_id"]).mark_description,
+            "color": id_to_color(t["difficulty_level_id"])
         })
     return render(request, 'studentAllTasks.html', context)
 
@@ -201,14 +213,15 @@ def teacher_tasks(request):
     отрисовывает все задания в формате {id: int, name: str}
     """
 
-    tasks_all = Tasks.objects.values("id", "task_name", "difficulty_level")
+    tasks_all = Tasks.objects.values("id", "task_name", "difficulty_level", "difficulty_level_id")
     context = {"tasks": []}
     for it in tasks_all:
         diff_lvl = get_object_or_404(Marks, id=it["difficulty_level"])
         context["tasks"].append({
             "id": it["id"],
             "name": it["task_name"],
-            "difficulty_level": diff_lvl.mark_description
+            "difficulty_level": diff_lvl.mark_description,
+            "color": id_to_color(it["difficulty_level_id"])
         })
 
     return render(request, 'teacherTasks.html', context)
