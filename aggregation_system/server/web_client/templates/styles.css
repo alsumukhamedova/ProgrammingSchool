@@ -1,0 +1,577 @@
+body {
+    height: 100vh;
+    overflow: hidden;
+    padding: 0 0 100px 0;
+}
+
+section {
+    max-width: 1440px;
+}
+.checkBox{
+    width: 20px;
+    height: 20px;
+    margin: auto;
+}
+.blue {
+    background-color: #006BB6;
+}
+
+.green {
+    background-color: #8DB11B;
+}
+
+.text-blue {
+    color: #006BB6;
+}
+
+.transparentColor {
+    background-color: rgba(141, 177, 27, 0.28);
+}
+
+.tasksContainer {
+    background: #FFFFFF;
+    border: 3px solid #8DB11B;
+    box-sizing: border-box;
+    border-radius: 20px;
+    margin: 0 auto;
+    padding: 5px 15px;
+}
+
+.item-text {
+    font-size: 20px;
+    color: black;
+    margin-top: 10px;
+    max-height: 300px;
+}
+
+.marked {
+    border: none;
+    font-size: 20px;
+    font-weight: bolder;
+    margin-top: 5px;
+}
+
+@media screen and (max-width: 1050px) {
+    .marked {
+        width: 100%;
+        font-weight: normal;
+
+    }
+}
+
+@media screen and (max-width: 1500px) {
+    .marked {
+        font-size: 20px;
+        width: 15%;
+    }
+}
+
+.options {
+    display: flex;
+    justify-content: right;
+}
+
+@media screen and (max-width: 1050px) {
+    .options {
+        width: 100%;
+    }
+}
+
+#taskNames {
+    overflow-y: scroll;
+    background-color: #ffffff;
+    height: 400px;
+}
+
+@media screen and (min-width: 1600px) {
+    #taskNames {
+        height: 700px;
+    }
+}
+
+@media screen and (max-width: 1300px) {
+    #taskNames {
+        height: 300px;
+    }
+}
+
+#taskNames::-webkit-scrollbar {
+    width: 20px;
+    background-color: #f9f9fd;
+}
+
+#taskNames::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background-color: #8DB11B;
+}
+
+#taskNames::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+    border-radius: 30px;
+    background-color: rgba(141, 177, 27, 0.28)
+}
+
+.parts {
+    margin: 10px auto 15px;
+    height: 98%;
+}
+
+@media screen and (max-width: 1000px) {
+    .parts {
+        height: 80%;
+    }
+}
+
+.taskDescription {
+    max-height: 300px;
+    border: 3px solid #8DB11B;
+    border-radius: 20px;
+}
+
+#taskDescription {
+    overflow-y: scroll;
+    background-color: #ffffff;
+    height: 290px;
+}
+
+.text {
+    min-height: 350px;
+}
+
+#taskDescription::-webkit-scrollbar {
+    width: 20px;
+    background-color: #f9f9fd;
+}
+
+#taskDescription::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background-color: #8DB11B;
+}
+
+#taskDescription::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+    border-radius: 30px;
+    background-color: rgba(141, 177, 27, 0.28)
+}
+
+.profilePic {
+    width: 130px;
+    height: 170px;
+    margin: 40px 70px 0 60px;
+}
+
+.profileText {
+    margin: 60px 0 0 0;
+}
+
+.form-group {
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.form {
+    margin: 40px 0 0 0;
+}
+
+.saveProfileButton {
+    margin: 0;
+    width: 30%;
+    height: 50px;
+    font-size: 20px;
+    padding: 0;
+}
+
+@media screen and (max-width: 1440px) {
+    .saveProfileButton {
+        width: 50%;
+    }
+}
+
+.editProfileButton {
+    margin: 0;
+    height: 50px;
+    width: 25%;
+    font-size: 20px;
+    padding: 0;
+}
+
+.profileForm {
+    width: 80%;
+    height: 50px;
+}
+
+.logIn {
+    position: relative;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.logIn__group {
+    margin: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.logIn__heading {
+    text-align: center;
+}
+
+.logIn__pic {
+    max-width: 450px;
+    max-height: 450px;
+}
+
+.logInForm {
+    height: 40px;
+    width: 50%;
+    margin: 20px auto 0;
+}
+
+.logInButton {
+    margin: 5px auto;
+    width: 45%;
+}
+
+.logIn__roundTop {
+    width: 20%;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.logIn__roundLeft {
+    width: 20%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.logIn__passwordReset {
+    color: #cdcdcd;
+    width: 100%;
+    font-size: 15px;
+    text-align: center;
+    margin: 0;
+}
+
+.logIn__passwordResetText {
+    color: #cdcdcd;
+    width: 100%;
+    text-align: center;
+    font-size: 15px;
+    margin: 0;
+}
+
+.logIn__regLink {
+    margin: 10px auto 0;
+    color: #cdcdcd;
+}
+
+.regForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 60%;
+    height: 50%;
+    padding: 10%;
+}
+
+.regButton {
+    margin: 40px auto;
+    width: 45%;
+}
+
+.reg__roundLeft {
+    hegiht: 15%;
+    width: 15%;
+    position: absolute;
+    top: 0%;
+    left: 0;
+}
+
+.reg__roundRight {
+    hegiht: 15%;
+    width: 15%;
+    position: absolute;
+    bottom: 0%;
+    right: 0;
+}
+
+.regButton {
+    margin: 25px auto;
+    width: 45%;
+}
+
+.start {
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/backgroundmain.png');
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.check {
+    margin-top: auto;
+    margin-right: 25%;
+    color: #006BB6;
+    width: 20px;
+    height: 20px;
+}
+
+.addGroup {
+    display: flex;
+    justify-content: end;
+    margin: 50px;
+    max-width: 50%;
+}
+.addTaskGroup{
+    display: flex;
+    justify-content: end;
+    margin: 50px;
+    max-width: 50%;
+}
+
+.saveSolutionButton {
+    margin: 5px;
+    height: 50px;
+    width: 25%;
+    font-size: 18px;
+    padding: 0;
+}
+
+@media screen and (max-width: 1200px) {
+    .saveSolutionButton {
+        width: 50%;
+        height: 40px;
+    }
+}
+
+.ace {
+    display: flex;
+    width: 35%;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #8DB11B;
+    margin: 5px;
+    height: 50px;
+    font-size: 18px;
+    padding: 0;
+}
+
+@media screen and (max-width: 1200px) {
+    .ace {
+        width: 50%;
+        height: 40px;
+    }
+}
+
+.taskFooter {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10px;
+}
+
+#editor {
+    position: relative;
+    border: 3px solid #8DB11B;
+    border-radius: 20px;
+    width: 50%;
+    font-size: 16px;
+    max-height: 630px;
+}
+
+.popup {
+    padding: 0;
+    visibility: hidden;
+    display: flex;
+    box-sizing: border-box;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    background-color: rgba(0, 0, 0, .5);
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    /*opacity: 0;*/
+    transition: all .5s;
+}
+
+.popup__container {
+    width: 430px;
+    height: 294px;
+    background-color: #fff;
+    border-radius: 10px;
+    position: relative;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+    padding-top: 36px;
+}
+
+@media screen and (max-width: 600px) {
+    .popup__container {
+        max-width: 380px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .popup__container {
+        padding: 25px 22px;
+        max-width: 238px;
+    }
+}
+
+.popup__close {
+    width: 33px;
+    height: 33px;
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    cursor: pointer;
+    transition: all linear .2s;
+    background-color: transparent;
+    border: none;
+}
+
+.popup__close:hover {
+    opacity: 0.6;
+}
+
+@media screen and (max-width: 620px) {
+    .popup__close {
+        right: -40px;
+        top: -40px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .popup__close {
+        /*background-image: url("../../../images/CloseIconMobile.svg");*/
+        background-size: 37px 37px;
+        right: 0;
+        top: -51px;
+    }
+}
+
+.popup__title {
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    text-rendering: optimizeLegibility;
+    margin: 0 36px;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+}
+
+@media screen and (max-width: 550px) {
+    .popup__title {
+        font-size: 18px;
+        line-height: 22px;
+        width: 100%;
+    }
+}
+
+.popup__form {
+    height: 260px;
+    width: 358px;
+    font-family: 'Inter', sans-serif;
+    background-color: white;
+    margin: 34px auto 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0;
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 550px) {
+    .popup__form {
+        width: 238px;
+    }
+}
+
+.popup__input {
+    padding: 5px 5px 13px 5px;
+    display: block;
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+    font-size: 14px;
+    line-height: 17px;
+    transition: all .5s;
+    cursor: pointer;
+}
+
+.popup__input:focus {
+    outline: none;
+}
+
+@media screen and (max-width: 550px) {
+    .popup__input:last-of-type {
+        margin-bottom: 45px;
+    }
+}
+
+.popup__input:nth-child(2) {
+    margin-bottom: 0;
+}
+
+.popup__input::placeholder {
+    font-size: 14px;
+    font-family: inherit;
+    line-height: 17px;
+    color: rgba(0, 0, 0, 0.2);
+}
+
+.popup__button {
+    margin: 0;
+    padding: 0;
+    width: 358px;
+    height: 50px;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    background-color: #8DB11B;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+    color: #FFFFFF;
+    border-radius: 2px;
+    transition: all .5s;
+    cursor: pointer;
+}
+
+.popup__button:hover {
+    background-color: #8DB11B;
+}
+
+.popup__button:focus {
+    outline: 0;
+}
+
+@media screen and (max-width: 550px) {
+    .popup__button {
+        height: 46px;
+        font-size: 14px;
+        line-height: 17px;
+        margin-top: 9px;
+    }
+}
+
+.popup_opened {
+    visibility: visible;
+}
+
+.button_text {
+    text-decoration: none;
+    color: white;
+}
+.button_text:hover{
+    color: white;
+    text-decoration: underline;
+}
