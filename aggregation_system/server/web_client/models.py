@@ -54,7 +54,7 @@ class Tasks(models.Model):
     task_name = models.CharField(max_length=100, null=False, unique=True)
     task_description = models.TextField(null=False, unique=True)
     test_data = models.CharField(max_length=500, null=False)
-    time_to_solve = models.IntegerField()
+    time_to_solve = models.CharField(max_length=200, null=False)
     resource_load = models.CharField(max_length=300, null=False)
     difficulty_level = models.ForeignKey(Marks, on_delete=models.CASCADE)
 
