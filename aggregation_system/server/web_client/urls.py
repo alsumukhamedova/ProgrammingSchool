@@ -6,13 +6,11 @@ from .views import (index, send_result, check_send, tasks, task,
                     teacher_groups, teacher_tasks, teacher_task,
                     login, register, reset_password, profile_edit,
                     sign_up, login_user, students_by_group, teacher_groups_add,
-                    add_task_group, change_info_user, all_tasks, group_statistics, add_to_db)
+                    add_task_group, change_info_user, all_tasks, group_statistics)
 
 """Links in web_client app"""
 
 urlpatterns = [
-                  path('adddb/', add_to_db),
-
                   path('', index),
                   path('sign-up/', sign_up),
                   path('login-user/', login_user),
