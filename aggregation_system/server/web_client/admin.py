@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CheckSend, ResultSend
+from .models import CheckSend, CompleteTask
 
 admin.site.register(CheckSend)
-admin.site.register(ResultSend)
+admin.site.register(CompleteTask)

@@ -11,12 +11,12 @@
 <body>
 <main class="start">
     <section class="logIn__group">
-        <img src="images/logIn.png" class="logIn__pic">
+        <img src="{% static 'images/logIn.png' %}" class="logIn__pic">
         <div class="d-flex">
-            <button type="submit" class="btn shadow text-white green saveProfileButton rounded-pill logInButton"><a href="logIn.html" class="text-decoration-none text-reset">Войти</a></button>
+            <button type="submit" class="btn shadow text-white green saveProfileButton rounded-pill logInButton"><a href="/login" class="text-decoration-none text-reset">Войти</a></button>
         </div>
         <div class="d-flex">
-            <button type="submit" class="btn shadow text-white blue saveProfileButton rounded-pill logInButton"><a href="registration.html" class="text-decoration-none text-reset">Зарегистрироваться</a></button>
+            <button type="submit" class="btn shadow text-white blue saveProfileButton rounded-pill logInButton"><a href="/register" class="text-decoration-none text-reset">Зарегистрироваться</a></button>
         </div>
     </section>
 </main>

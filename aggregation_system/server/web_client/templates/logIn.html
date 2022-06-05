@@ -10,23 +10,26 @@
 </head>
 <body>
 <main class="logIn">
-    <img src="{% static 'images/Ellipse%205.png' %}" class="logIn__roundLeft">
+    <img src="{% static 'images/Ellipse 5.png' %}" class="logIn__roundLeft">
     <section class="logIn__group">
         <img src="{% static 'images/logIn.png' %}" class="logIn__pic">
         <h1 class="logIn__heading">Войти</h1>
         <div class="logIn__email">
-            <input type="email" class="form-control shadow rounded-pill logInForm" placeholder="*Email">
+            <input type="email" class="form-control shadow rounded-pill logInForm" name="user_login" placeholder="*Login">
         </div>
         <div class="form-group">
-            <input type="password" class="form-control shadow rounded-pill logInForm" placeholder="*Password">
+            <input type="password" class="form-control shadow rounded-pill logInForm" name="user_password" placeholder="*Password">
         </div>
-        <a href="resetPassword.html"><p class="logIn__passwordReset"><u>Забыли пароль?</u></p></a>
+        <p id="incorrectPassword" style="color:red; visibility: hidden; margin: 0 auto">Пользователь не найден</p>
+{#        <a href="/reset_password"><p class="logIn__passwordReset"><u>Забыли пароль?</u></p></a>#}
         <div class="d-flex">
-            <button type="submit" class="btn shadow text-white green saveProfileButton rounded-pill logInButton">Сохранить</button>
+            <button type="submit" class="btn shadow text-white green saveProfileButton rounded-pill logInButton" onclick="login()">Сохранить</button>
         </div>
-        <p class="logIn__regLink">Нет аккаунта? <a href="registration.html" class="text-blue"><u><b>Зарегистрируйтесь</b></u></a></p>
+        <p class="logIn__regLink">Нет аккаунта? <a href="/register" class="text-blue"><u><b>Зарегистрируйтесь</b></u></a></p>
     </section>
-    <img src="{% static 'images/Ellipse%204.png' %}" class="logIn__roundTop">
+    <img src="{% static 'images/Ellipse 4.png' %}" class="logIn__roundTop">
 </main>
+<script src="{% static 'js.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </body>
 </html>

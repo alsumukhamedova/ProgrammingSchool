@@ -15,12 +15,17 @@
         <div class="col-12>">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <ul class="nav col-12 col-lg-auto">
-                    <li><a href="/teacher/tasks" class="nav-link px-5 text-white fs-3"
-                           style="margin-left: 90px;"><u>Задачи</u></a></li>
+                    <li><a href="all" class="nav-link px-5 text-white fs-3"
+                           style="margin-left: 90px;"><u>Все задачи</u></a></li>
                 </ul>
                 <ul class="nav col-12 col-lg-auto me-lg-auto">
-                    <li><a href="/teacher/groups" class="nav-link px-5 text-white fs-3"><u>Группы</u></a></li>
+                    <li><a href="/tasks" class="nav-link px-5 text-white fs-3"><u>Мои задачи</u></a></li>
                 </ul>
+                <div class="text-end">
+                    <p class="btn text-white mb-2 mb-md-0 fs-4 fw-weight-bolder">0
+                        <img src="{% static 'images/Star 1.png' %}" class="img-fluid mb-2" width="30" height="30">
+                    </p>
+                </div>
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                        data-bs-toggle="dropdown" aria-expanded="false">
@@ -28,7 +33,7 @@
                              class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                        <li><a class="dropdown-item" href="/profile">Редактировать профиль</a></li>
+                        <li><a class="dropdown-item" href="/profile_edit">Редактировать профиль</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -40,18 +45,12 @@
     </div>
 </header>
 <section class="col-8 container">
-    <div class="d-flex justify-content-around w-100 flex-row">
-        <h1 class="text-blue mt-5">{{ group.name }}</h1>
-        <h1 class="text-blue mt-5">{{ task.name }}</h1>
-{#        <h4 class="addGroup text-blue"#}
-{#            style="visibility: {% if disable_task_descr %}hidden{% else %}visible{% endif %}"><a#}
-{#                href="/teacher/tasks/{{ task.id }}"><u>Описание задачи</u></a></h4>#}
-    </div>
-    <div class="col-10 d-flex flex-column tasksContainer align-content-flex-start">
+    <h1 class="text-blue mt-lg-5 text-center">Все задачи</h1>
+    <div class="col-8 d-flex flex-column tasksContainer align-content-flex-start" style="padding-right: 5px">
         <div class="" id="taskNames">
-            {% for person in person_list %}
+            {% for task in tasks %}
                 <div class="d-flex flex-row justify-content-between">
-                    <u class="item-text">{{ person.user_name }}</u>
+                    <a href="{{ task.id }}" class="item-text" style="color: {{ task.color }}"><u>{{ task.name }}</u></a>
                 </div>
             {% endfor %}
         </div>
