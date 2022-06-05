@@ -70,7 +70,9 @@ def tasks(request):
         if it["id"] in tasks_con:
             c = {
                 "id": it["id"],
-                "name": it["task_name"]
+                "name": it["task_name"],
+                "checked": 'checked' if CompleteTask.objects.filter(task_id__exact=it["id"],
+                                                                    status='OK').first() is not None else ''
             }
             context["tasks"].append(c)
 

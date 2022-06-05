@@ -50,7 +50,7 @@
             <div class="d-flex flex-row justify-content-between">
                 <a href="{{ task.id }}" class="item-text"><u>{{ task.name }}</u></a>
                 <div class="transparentColor w-25 d-flex justify-content-around" style="margin-right: 10px;">
-                    <p class="marked text-blue">{{ task.points }}</p>
+                    <input type="checkbox" {{ task.checked }} disabled>
                 </div>
             </div>
             {% endfor %}
