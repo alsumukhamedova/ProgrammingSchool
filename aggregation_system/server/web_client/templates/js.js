@@ -2,7 +2,6 @@ var editor = ace.edit("editor");
 editor.getSession().setMode(document.querySelector('#-mode').value);
 editor.setTheme("ace/theme/eclipse");
 editor.getSession().setTabSize(2);
-editor.setValue('');
 
 
 function changeMode() {
