@@ -82,7 +82,7 @@ async def submit_run(source_file, contest_id, language, shortname):
 
     run_id = result.stdout.decode("utf-8").strip()
 
-    await asyncio.sleep(10)
+    await asyncio.sleep(15)
 
     result = subprocess.run(
         [
