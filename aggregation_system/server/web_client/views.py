@@ -225,7 +225,8 @@ def teacher_task(request, task_id):
         "marked_groups": [{
             "name": group['group_name'],
             "id": group['id']
-        } for group in groups.filter(markedtasks__task_id__exact=task_id, teacher_id=teacher_id).values()]
+        } for group in groups.filter(markedtasks__task_id__exact=task_id, teacher_id=teacher_id).values()],
+        "task_id": task_id
     }
     return render(request, 'teacherTaskDescription.html', context)
 

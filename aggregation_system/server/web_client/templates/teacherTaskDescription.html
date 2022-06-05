@@ -51,10 +51,6 @@
             <button type="submit" class="btn shadow text-white green saveProfileButton rounded-pill addButton mt-1 mb-2"
                     onclick="return openPopup()">Добавить группу
             </button>
-            {#            <button type="submit" class="btn shadow text-white green saveProfileButton rounded-pill addGroup mt-1 mb-2"#}
-            {#                    style="display: flex; align-items: center; justify-content: center;">#}
-            {#                <a href="/statistics/{{ task_id }}" class="button_text">Статистика</a>#}
-            {#            </button>#}
         </div>
     </div>
 </section>
@@ -68,7 +64,7 @@
         <div class="row h-100 parts taskDescription" style="margin-left: 5%">
             <div class="d-flex flex-column align-content-flex-start">
                 {% for group in marked_groups %}
-                    <a href="#" style="text-decoration: none">{{ group.name }}</a>
+                    <a href="/teacher/tasks/{{ task_id }}/{{ group.id }}" style="text-decoration: none">{{ group.name }}</a>
                 {% endfor %}
             </div>
         </div>
