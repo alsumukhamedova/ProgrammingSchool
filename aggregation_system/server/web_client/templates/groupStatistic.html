@@ -40,12 +40,12 @@
     </div>
 </header>
 <section class="col-8 container">
-    <div class="d-flex justify-content-between flex-row">
+    <div class="d-flex justify-content-around w-100 flex-row">
         <h1 class="text-blue mt-5">{{ group.name }}</h1>
-        <h2 class="text-blue mt-5">{{ task.name }}</h2>
-        <h4 class="addGroup text-blue"
-            style="visibility: {% if disable_task_descr %}hidden{% else %}visible{% endif %}"><a
-                href="/teacher/tasks/{{ task.id }}"><u>Описание задачи</u></a></h4>
+        <h1 class="text-blue mt-5">{{ task.name }}</h1>
+{#        <h4 class="addGroup text-blue"#}
+{#            style="visibility: {% if disable_task_descr %}hidden{% else %}visible{% endif %}"><a#}
+{#                href="/teacher/tasks/{{ task.id }}"><u>Описание задачи</u></a></h4>#}
     </div>
     <div class="col-10 d-flex flex-column tasksContainer align-content-flex-start">
         <div class="" id="taskNames">
