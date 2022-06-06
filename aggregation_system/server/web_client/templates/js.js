@@ -77,8 +77,7 @@ function group_change_by_type() {
     const type = document.querySelector("body > main > section > div:nth-child(6) > select").value;
     if (type === 'teacher') {
         document.querySelector("body > main > section > div:nth-child(7) > select").style.visibility = 'hidden'
-    }
-    else {
+    } else {
         document.querySelector("body > main > section > div:nth-child(7) > select").style.visibility = 'visible'
     }
 }
@@ -94,8 +93,8 @@ function reset_password() {
         },
         success: function () {
             setTimeout(function () {
-                    location.reload();
-                }, 500)
+                location.reload();
+            }, 500)
         },
         error: function () {
             alert("Произошла какая-то ошибка сервера ;(")
@@ -158,6 +157,7 @@ function closePopup() {
 }
 
 function renderGroup() {
+    event.preventDefault();
     $.ajax('/teacher/add-task',
         {
             type: 'POST',
@@ -165,11 +165,11 @@ function renderGroup() {
                 group_id: document.querySelector("body > section.parts.d-flex.justify-content-start > div.popup.popup_opened > div > form > select").value,
                 task_id: window.location.pathname.split('/')[window.location.pathname.split('/').length - 1],
             },
-            success: function (data, status, xhr) {   // success callback function
+            success: function (data) {   // success callback function
                 alert('Группа добавлена');
                 setTimeout(function () {
                     location.reload();
-                }, 2000)
+                }, 1000)
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback
                 alert('Возникла непредвиденная ошибка. Пожалуйста, попробуйте позднее.');
