@@ -19,7 +19,7 @@ def id_to_color(color_id):
     if color_id == 1:
         return "green"
     elif color_id == 2:
-        return "yellow"
+        return "orange"
     elif color_id == 3:
         return "red"
     return ''
