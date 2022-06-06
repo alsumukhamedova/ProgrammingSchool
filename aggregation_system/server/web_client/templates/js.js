@@ -185,7 +185,7 @@ function addNewGroup() {
             data: {
                 group_name: document.querySelector("body > section > div.popup.popup_opened > div > form > input").value,
             },
-            success: function (data, status, xhr) {   // success callback function
+            success: function (data) {   // success callback function
                 alert('Группа добавлена');
                 setTimeout(function () {
                     location.reload();
