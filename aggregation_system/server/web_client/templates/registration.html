@@ -29,14 +29,14 @@
         <div class="dropdown d-flex justify-content-center">
             <td>
                 <select class="rounded-pill logInForm shadow border-light" onchange="group_change_by_type()">
-                    <option value="student"> *Student</option>
                     <option value="teacher"> *Teacher</option>
+                    <option value="student"> *Student</option>
                 </select>
             </td>
         </div>
         <div class="dropdown d-flex justify-content-center">
             <td>
-                <select class="rounded-pill logInForm shadow border-light">
+                <select class="rounded-pill logInForm shadow border-light" style="visibility: hidden">
                     {% for group in groups %}
                         <option value="{{ group.id }}">{{ group.name }}</option>
                     {% endfor %}

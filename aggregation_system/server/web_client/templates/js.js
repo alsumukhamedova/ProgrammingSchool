@@ -136,6 +136,9 @@ function tryGetCheckResult() {
             },
             success: function (data, status, xhr) {   // success callback function
                 alert('Вы успешно решили задачу!');
+                setTimeout(function () {
+                    location.reload();
+                }, 2000)
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback
                 console.log('Error: ' + errorMessage);
@@ -175,6 +178,7 @@ function renderGroup() {
 }
 
 function addNewGroup() {
+    event.preventDefault();
     $.ajax('/teacher/add-group',
         {
             type: 'POST',
@@ -185,7 +189,7 @@ function addNewGroup() {
                 alert('Группа добавлена');
                 setTimeout(function () {
                     location.reload();
-                }, 2000)
+                }, 1000)
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback
                 alert('Возникла непредвиденная ошибка. Пожалуйста, попробуйте позднее.');
