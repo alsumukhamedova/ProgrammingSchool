@@ -1,18 +1,12 @@
-import os
-
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from rest_framework.decorators import api_view
+from rest_framework import status
 from rest_framework.response import Response
-from django.db import IntegrityError
 
 from .models import Marks, CompleteTask, UserTypes, Users, Tasks, StudentGroupInfo, GroupComposition, MarkedTasks, \
     CheckSend
-from .serializers import CompleteTaskSerializer, StudentGroupInfoSerializer
-from .submit import submit_run
-import asyncio
-
-FILE_DIR = '/home/gypsyjr-virtual/PycharmProjects/aggregation_system/aggregation_system/server/web_client/files/'
+from .serializers import CompleteTaskSerializer
 
 
 def id_to_color(color_id):
@@ -53,7 +47,7 @@ def reset_password(request):
 
 
 def profile_edit(request):
-    user = Users.objects.get(id = request.COOKIES.get("id") )
+    user = Users.objects.get(id=request.COOKIES.get("id"))
     return render(
         request,
         'teacherProfielEdit.html' if (request.COOKIES.get("type") == 'teacher') else 'studentProfileEdit.html',
@@ -153,7 +147,8 @@ def group_statistics(request, task_id, group_id):
     teacher_id = request.COOKIES.get("id")
     group = StudentGroupInfo.objects.get(teacher=teacher_id, id=group_id)
     task = Tasks.objects.get(id=task_id)
-    person_list = Users.objects.filter(completetask__task_id_id__exact=task_id, completetask__status__exact='OK').values("user_name").distinct()
+    person_list = Users.objects.filter(completetask__task_id_id__exact=task_id,
+                                       completetask__status__exact='OK').values("user_name").distinct()
 
     context = {'task': {'id': task.id, 'name': task.task_name},
                'group': {'id': group.id, 'name': group.group_name},
@@ -254,42 +249,7 @@ def check_send(request):
     :return:
         data with format...
     """
-    data = request.data
-    user_id = request.COOKIES.get("id")
-    path_file = FILE_DIR + user_id + "_" + data["task_id"] + ".py"
-
-    with open(path_file, "w") as file:
-        file.write(data["code"])
-
-    file.close()
-
-    test = asyncio.run(
-        submit_run(
-            path_file,
-            "2",
-            "python3",
-            data["task_id"],
-        )
-    )
-
-    os.remove(path_file)
-    result = CompleteTask(user_id=get_object_or_404(Users, id=user_id),
-                          task_id=get_object_or_404(Tasks, id=data["task_id"]),
-                          program_lang="Python", status=test["STATUS"],
-                          time=test["TIME"], size=test["SIZE"])
-
-    result.save()
-
-    code = CheckSend(user_id=get_object_or_404(Users, id=user_id),
-                     task_id=get_object_or_404(Tasks, id=data["task_id"]),
-                     program_lang="Python", code=data["code"])
-
-    try:
-        code.save()
-    except IntegrityError:
-        CheckSend.objects.filter(user_id=user_id, task_id_id=data["task_id"]).update(code=data["code"])
-
-    return Response({"message": test["STATUS"], "data": test})
+    return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
 
 
 @api_view(['GET'])
